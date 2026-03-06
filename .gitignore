@@ -1,0 +1,10 @@
+*
+!.gitignore
+
+!license
+!readme.md
+
+!skills
+!skills/**
+!CLAUDE.md
+!settings.json
