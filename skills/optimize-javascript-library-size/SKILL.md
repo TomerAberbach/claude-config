@@ -51,14 +51,9 @@ Reduce the size of this JavaScript library: $ARGUMENTS
   node --input-type=module << 'EOF'
     import { readFileSync } from 'fs'
     import { gzipSync, brotliCompressSync } from 'zlib'
-
     const raw = readFileSync('REPLACE_ME.js', 'utf8')
     const minified = Buffer.from(raw.replace(/^\/\/# sourceMappingURL=[^\n]+$/m, '').trimEnd())
-    const gzipped = gzipSync(minified)
-    const brotli = brotliCompressSync(minified)
-    console.log(`Minified: ${minified.length} bytes`)
-    console.log(`Gzipped:  ${gzipped.length} bytes`)
-    console.log(`Brotli:   ${brotli.length} bytes`)
+    console.log(`Minified: ${minified.length} | Gzipped: ${gzipSync(minified).length} | Brotli: ${brotliCompressSync(minified).length}`)
   EOF
   ```
 

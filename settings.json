@@ -10,13 +10,20 @@
     "allow": [
       "Read",
       "Grep",
-      "Bash(jj diff)",
+      "Bash(grep *)",
+      "Bash(head *)",
+      "Bash(tail *)",
       "Bash(jj diff *)",
+      "Bash(pnpm format *)",
+      "Bash(pnpm lint *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm build *)",
       "mcp__ide__getDiagnostics"
     ],
     "deny": [
       "Bash(git *)",
-      "Bash(grep *)"
+      "Bash(tsc *)"
     ]
   },
   "spinnerTipsEnabled": false,
