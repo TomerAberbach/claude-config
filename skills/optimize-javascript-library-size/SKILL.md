@@ -71,6 +71,7 @@ Reduce the size of this JavaScript library: $ARGUMENTS
 - Mangle internal objects using private class fields or underscore prefixed properties
 - Replace internal classes with closures returning objects
 - Inline single-use functions that don't add clarity
+- Restructure single-use functions that add clarity to be inlinable by `terser`
 - Replace `function`s with arrow functions
 - Replace `switch` with `if` and `else`
 - Replace `===`/`!==` with `==`/`!=` when it doesn't change behavior
