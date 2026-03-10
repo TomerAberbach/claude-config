@@ -10,6 +10,7 @@
     "allow": [
       "Read",
       "Grep",
+      "Bash(find *)",
       "Bash(grep *)",
       "Bash(head *)",
       "Bash(tail *)",
