@@ -12,6 +12,7 @@
       "Grep",
       "Bash(find *)",
       "Bash(grep *)",
+      "Bash(cat *)",
       "Bash(head *)",
       "Bash(tail *)",
       "Bash(jj diff *)",
