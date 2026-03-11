@@ -15,6 +15,7 @@
       "Bash(cat *)",
       "Bash(head *)",
       "Bash(tail *)",
+      "Bash(jq *)",
       "Bash(jj diff *)",
       "Bash(jj log *)",
       "Bash(pnpm format *)",
