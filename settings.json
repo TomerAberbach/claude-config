@@ -20,6 +20,7 @@
       "Bash(pnpm lint *)",
       "Bash(pnpm typecheck *)",
       "Bash(pnpm test *)",
+      "Bash(pnpm coverage *)",
       "Bash(pnpm build *)",
       "mcp__ide__getDiagnostics"
     ],
