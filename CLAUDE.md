@@ -6,7 +6,8 @@
 
 # Workflow
 
-- Use `node --input-type=module << 'EOF' ... EOF` to test hypotheses
+- Use `node --input-type=module << 'EOF' ... EOF` to test hypotheses about
+  JS/TS code. Prefer `Bash` for everything else
 - Run individual tests, not the whole test suite
 
 # Code style

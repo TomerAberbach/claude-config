@@ -21,6 +21,7 @@
       "Bash(pnpm format *)",
       "Bash(pnpm lint *)",
       "Bash(pnpm typecheck *)",
+      "Bash(pnpm vitest * )",
       "Bash(pnpm test *)",
       "Bash(pnpm coverage *)",
       "Bash(pnpm build *)",
@@ -54,6 +55,22 @@
       "Texturing",
       "Tamping",
       "Weighing"
+    ]
+  },
+  "env": {
+    "SHELL": "/opt/homebrew/bin/bash"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/auto-approve-allowed-commands.sh"
+          }
+        ]
+      }
     ]
   }
 }
