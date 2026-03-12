@@ -1,5 +1,5 @@
 ---
-name: optimize-javascript-library-size
+name: optimize-js-library-size
 description: Optimize JavaScript library size
 disable-model-invocation: true
 ---
