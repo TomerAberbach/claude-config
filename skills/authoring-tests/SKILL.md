@@ -3,6 +3,7 @@ name: authoring-tests
 description: |
   Use when writing, reviewing, or modifying any test files, or when asked to add
   test coverage.
+user-invocable: false
 ---
 
 Adhere to these principles when writing tests:

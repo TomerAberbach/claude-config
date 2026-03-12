@@ -4,7 +4,7 @@ description: Optimize JavaScript library size
 disable-model-invocation: true
 ---
 
-Reduce the size of this JavaScript library: $ARGUMENTS
+Reduce the size of this JavaScript library.
 
 # Goals
 

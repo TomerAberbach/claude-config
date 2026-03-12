@@ -3,6 +3,7 @@ name: property-based-testing
 description: |
   Use when writing, reviewing, or modifying property-based tests, such as those
   using `fast-check`, or when asked to add test coverage.
+user-invocable: false
 ---
 
 Before starting, read: `/mnt/skills/public/authoring-tests/SKILL.md`
