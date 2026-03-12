@@ -77,4 +77,4 @@ Reduce the size of this JavaScript library: $ARGUMENTS
 - Replace `===`/`!==` with `==`/`!=` when it doesn't change behavior
 - Replace strict checks with truthy/falsy checks when it doesn't change behavior
 
-This is just a sampling of ideas. Be creative! But don't implement optimizations that `terser` already performs automatically.
+These aren't exhaustive. Reason from first principles when none fits cleanly.
