@@ -6,7 +6,7 @@ description: |
 user-invocable: false
 ---
 
-Before starting, read: `/mnt/skills/public/authoring-tests/SKILL.md`
+Before starting, read: `../authoring-tests/SKILL.md`
 
 Adhere to these principles when writing property-based tests:
 

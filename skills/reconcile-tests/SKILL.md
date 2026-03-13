@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 Add, update, or delete tests for changes made in the current `jj` commit.
 
-Before starting, read: `/mnt/skills/public/authoring-tests/SKILL.md`
+Before starting, read: `../authoring-tests/SKILL.md`
 
 # Goals
 
