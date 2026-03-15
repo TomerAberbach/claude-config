@@ -31,7 +31,8 @@
     ],
     "deny": [
       "Bash(git *)",
-      "Bash(tsc *)"
+      "Bash(tsc *)",
+      "Bash(npm *)"
     ]
   },
   "spinnerTipsEnabled": false,
