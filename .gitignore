@@ -5,6 +5,7 @@
 !.github/**
 !package.json
 !pnpm-lock.yaml
+!.prettierignore
 
 !license
 !readme.md
