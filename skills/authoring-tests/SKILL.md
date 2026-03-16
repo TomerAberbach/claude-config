@@ -16,6 +16,9 @@ Adhere to these principles when writing tests:
 - Keep each test focused and orthogonal to other tests unless you're testing an
   interaction between two behaviors or each test is expensive.
 
+- Prefer parameterized testing over multiple independent calls and assertions in
+  the same test.
+
 - Test behaviors, not functions. A single function may exhibit many behaviors,
   and a single behavior sometimes spans across multiple functions.
 

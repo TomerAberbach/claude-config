@@ -13,5 +13,6 @@
 
 # Code style
 
-- ES modules (`import`/`export`), not CommonJS (`require`)
+- Place classes/functions in decreasing order of abstraction (using before used)
 - Early `return`/`continue`/`break` to reduce nesting
+- ES modules (`import`/`export`), not CommonJS (`require`)

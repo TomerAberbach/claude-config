@@ -36,7 +36,7 @@ If no files are changed, the consider all files in the current directory.
    2. Update if expectations are outdated
    3. Flag regressions to the user. Describe the changed behavior, the failing test, and your hypothesis about
       why it's a bug. Ask how to proceed
-   Go back to step 4 after making updates
+   Go back to step 3 after making updates until all tests pass
 5. Add tests for new behaviors
 6. Run the new tests
 7. Examine failing tests and update them as necessary:
@@ -44,4 +44,4 @@ If no files are changed, the consider all files in the current directory.
    2. Flag to the user if the tests caught a bug, Describe the behavior, the failing test, and your hypothesis
       about why it's a bug. Ask how to proceed
    Go back to step 7 after making updates
-8. Run tests with coverage if possible. If _new_ logic is not covered, then go back to step 6
+8. Run tests with coverage if possible. If _new_ logic is not covered, then go back to step 5
