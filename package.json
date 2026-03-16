@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "format": "prettier --cache --write ."
+  },
+  "prettier": "@tomer/prettier-config",
+  "devDependencies": {
+    "@tomer/prettier-config": "^4.0.0",
+    "prettier": "^3.8.1"
+  }
+}

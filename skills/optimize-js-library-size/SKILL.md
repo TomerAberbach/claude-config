@@ -20,13 +20,16 @@ Reduce the size of this JavaScript library.
 3. Measure size
 4. Optimize
 5. Rebuild
-6. Measure size and compare: if size didn't improve, then revert and go back to step 4
-7. Run relevant tests: if tests are newly failing, then revert and go back to step 4
+6. Measure size and compare: if size didn't improve, then revert and go back to
+   step 4
+7. Run relevant tests: if tests are newly failing, then revert and go back to
+   step 4
 8. Repeat from step 4
 
 # Tools
 
 - Ensure `terser` is configured:
+
   ```js
   {
     // Assume modern JavaScript
@@ -47,6 +50,7 @@ Reduce the size of this JavaScript library.
   ```
 
 - Use `node` to measure size:
+
   ```bash
   node --input-type=module << 'EOF'
     import { readFileSync } from 'fs'
@@ -68,7 +72,8 @@ Reduce the size of this JavaScript library.
 
 ## Low-level
 
-- Mangle internal objects using private class fields or underscore prefixed properties
+- Mangle internal objects using private class fields or underscore prefixed
+  properties
 - Replace internal classes with closures returning objects
 - Inline single-use functions that don't add clarity
 - Restructure single-use functions that add clarity to be inlinable by `terser`

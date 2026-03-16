@@ -1,10 +1,13 @@
 ---
 name: reconcile-impl
-description: Update implementation to satisfy added, updated, or deleted tests in the current commit
+description:
+  Update implementation to satisfy added, updated, or deleted tests in the
+  current commit.
 disable-model-invocation: true
 ---
 
-Update the implementation to satisfy added, updated, or deleted tests in the current `jj` commit.
+Update the implementation to satisfy added, updated, or deleted tests in the
+current `jj` commit.
 
 # Goals
 
@@ -32,5 +35,5 @@ If no files are changed, then consider all files in the current directory.
 4. Examine failing tests and update the implementation as necessary:
    1. If a test was deleted, remove dead code paths that are no longer exercised
    2. If a test expectation changed, update the implementation to match
-   3. If a test is newly added, implement the required behavior
-   Go back to step 3 after making updates until all tests pass
+   3. If a test is newly added, implement the required behavior Go back to step
+      3 after making updates until all tests pass

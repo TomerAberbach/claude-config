@@ -29,11 +29,7 @@
       "Bash(pnpm build *)",
       "mcp__ide__getDiagnostics"
     ],
-    "deny": [
-      "Bash(git *)",
-      "Bash(tsc *)",
-      "Bash(npm *)"
-    ]
+    "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
   },
   "spinnerTipsEnabled": false,
   "spinnerVerbs": {

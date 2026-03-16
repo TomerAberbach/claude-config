@@ -8,10 +8,10 @@ user-invocable: false
 
 Adhere to these principles when writing tests:
 
-- Use arrange-act-assert
-  1. Arrange: set up the requisite state and inputs
-  2. Act: run the code that triggers the behavior under test
-  3. Assert: assert the expected outcomes
+- Use arrange-act-assert:
+  1. Arrange: set up the requisite state and inputs.
+  2. Act: run the code that triggers the behavior under test.
+  3. Assert: assert the expected outcomes.
 
 - Keep each test focused and orthogonal to other tests unless you're testing an
   interaction between two behaviors or each test is expensive.
