@@ -20,6 +20,9 @@ Adhere to these principles when writing property-based tests:
   arbitraries. It's often infeasible assert the full value. If no assertion
   seems feasible, then the input space is too broad.
 
+- NEVER unnecessarily constrain an arbitrary. Only add constraints if it's
+  necessary to satisfy the property or resolve performance problems.
+
 # Common properties
 
 - "Output is always/never X for all inputs". Example: for any number `n`,
@@ -90,3 +93,11 @@ Adhere to these principles when writing property-based tests:
   `isValid(data.slice(0, n))` for all `n`.
 
 These aren't exhaustive. Reason from first principles when none fits cleanly.
+
+# `fast-check` tips
+
+- Use `fc.clone(arb, count)` to produce multiple equal value instead of using
+  `structuredClone` or `JSON.parse(JSON.stringify(...))`.
+
+- Use `fc.uniqueArray(arb, { minLength, maxLength })` to produce unique values
+  instead of using `fc.tuple(...arbs).filter(...)`.
