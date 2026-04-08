@@ -17,7 +17,7 @@ current `jj` commit.
 
 # Recently changed files
 
-!`jj diff --summary`
+!`jj diff --stat`
 
 If no files are changed, then consider all files in the current directory.
 

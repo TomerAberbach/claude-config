@@ -16,7 +16,7 @@ Before starting, read: `../authoring-tests/SKILL.md`
 
 # Recently changed files
 
-!`jj diff --summary`
+!`jj diff --stat`
 
 If no files are changed, the consider all files in the current directory.
 
