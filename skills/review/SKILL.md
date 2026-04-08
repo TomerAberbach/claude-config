@@ -118,6 +118,4 @@ or not the patch should be considered "correct":
 >
 > # Overall correctness
 >
-> Verdict.
->
-> Optional explanation.
+> Verdict (with explanation ONLY if the code changes are incorrect).
