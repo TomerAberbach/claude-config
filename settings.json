@@ -20,6 +20,8 @@
       "Bash(jj status *)",
       "Bash(jj diff *)",
       "Bash(jj log *)",
+      "Bash(jj show *)",
+      "Bash(jj file show *)",
       "Bash(pnpm format *)",
       "Bash(pnpm lint *)",
       "Bash(pnpm typecheck *)",
