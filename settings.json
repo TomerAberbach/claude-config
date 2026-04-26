@@ -66,21 +66,5 @@
       "Tamping",
       "Weighing"
     ]
-  },
-  "env": {
-    "SHELL": "/opt/homebrew/bin/bash"
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/auto-approve-allowed-commands.sh"
-          }
-        ]
-      }
-    ]
   }
 }
