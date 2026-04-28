@@ -16,6 +16,8 @@ engineer.
 jj diff
 ```
 
+$ARGUMENTS
+
 # Goals
 
 - Find non-obvious issues that meaningfully impact the accuracy, performance,

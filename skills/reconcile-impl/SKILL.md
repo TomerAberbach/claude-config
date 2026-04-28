@@ -21,6 +21,8 @@ current `jj` commit.
 jj diff
 ```
 
+$ARGUMENTS
+
 # Workflow
 
 1. Explore each deleted, updated, or added test file, and identify:
