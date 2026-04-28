@@ -12,8 +12,8 @@ engineer.
 
 # Recently changed files
 
-```
-!`jj diff`
+```!
+jj diff
 ```
 
 # Goals

@@ -17,8 +17,8 @@ current `jj` commit.
 
 # Recently changed files
 
-```
-!`jj diff`
+```!
+jj diff
 ```
 
 # Workflow
