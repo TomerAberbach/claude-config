@@ -17,19 +17,16 @@ current `jj` commit.
 
 # Recently changed files
 
-!`jj diff --stat`
-
-If no files are changed, then consider all files in the current directory.
+```
+!`jj diff`
+```
 
 # Workflow
 
-1. Explore each deleted, updated, or added test file:
-   1. Read the file if it still exists
-   2. Run `jj diff <file>` to view changes
-   3. Identify:
-      - Deleted tests (behaviors no longer required)
-      - Modified tests (changed expectations, new edge cases, updated behavior)
-      - New tests (behaviors to implement)
+1. Explore each deleted, updated, or added test file, and identify:
+   - Deleted tests (behaviors no longer required)
+   - Modified tests (changed expectations, new edge cases, updated behavior)
+   - New tests (behaviors to implement)
 2. Find the implementation files that the changed tests import or reference
 3. Run the relevant tests
 4. Examine failing tests and update the implementation as necessary:

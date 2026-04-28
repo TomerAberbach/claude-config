@@ -12,16 +12,33 @@ engineer.
 
 # Recently changed files
 
-!`jj diff --stat`
+```
+!`jj diff`
+```
 
-If no files are changed, then consider all files in the current directory. Run
-`jj diff <file>` to view changes.
+# Goals
 
-# Goal
+- Find non-obvious issues that meaningfully impact the accuracy, performance,
+  security, or maintainability of the code
 
-Find issues that the original author would appreciate being flagged.
+# Workflow
 
-# Issue flagging guidelines
+1. For each changed function, branch, or code path:
+   1. Find usage sites across the codebase
+   2. Read each usage to determine the concrete types and values passed
+   3. Trace each distinct input through the changed code and note:
+      - Which branches it exercises
+      - Whether any new error path is reachable
+      - Whether the return value or side effects changed for that input
+      - Validate hypotheses by running the code for that input
+2. Flag all issues found during tracing, following the guidelines below
+
+Assume that the author has already run linting, typechecking, and tests. Do NOT
+run them yourself.
+
+# Guidelines
+
+## Issue flagging
 
 Only flag an issue when it meets all requirements:
 
@@ -43,7 +60,7 @@ Only flag an issue when it meets all requirements:
    code that are provably affected.
 8. The issue is clearly not just an intentional change by the original author.
 
-# Comment guidelines
+## Comments
 
 When flagging an issue, provide a comment that meets all requirements:
 
@@ -81,7 +98,7 @@ At the beginning of the comment, tag the issue with a priority level:
 - [P2] Normal. To be fixed eventually.
 - [P3] Low. Nice to have.
 
-# Enumerating issues
+## Enumerating issues
 
 1. Output all issues that the original author would fix if they knew about them.
 2. If there are no issues that a person would definitely love to see and fix,
@@ -92,7 +109,7 @@ At the beginning of the comment, tag the issue with a priority level:
    standards.
 5. Use one comment per distinct issue (or a multi-line range if necessary).
 
-# Evaluating correctness
+## Evaluating correctness
 
 At the end of your findings, output an "overall correctness" verdict of whether
 or not the patch should be considered "correct":
@@ -104,7 +121,7 @@ or not the patch should be considered "correct":
 3. Do not explain why the code changes are correct. Only explain why code
    changes are incorrect.
 
-# Example formatting
+## Example formatting
 
 > # Issues
 >
@@ -118,4 +135,4 @@ or not the patch should be considered "correct":
 >
 > # Overall correctness
 >
-> Verdict (with explanation ONLY if the code changes are incorrect).
+> Verdict (NEVER explain if the code changes are correct).

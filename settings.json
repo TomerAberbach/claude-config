@@ -5,7 +5,6 @@
     "pr": ""
   },
   "includeGitInstructions": false,
-  "enableAllProjectMcpServers": true,
   "permissions": {
     "allow": [
       "Read",
@@ -42,6 +41,7 @@
     ],
     "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
   },
+  "enableAllProjectMcpServers": true,
   "spinnerTipsEnabled": false,
   "spinnerVerbs": {
     "mode": "replace",

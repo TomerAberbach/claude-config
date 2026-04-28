@@ -1,6 +1,6 @@
 ---
 name: reconcile-tests
-description: Add, update, or delete tests for changes in the current commit
+description: Add, update, or delete tests for changes in the current commit.
 disable-model-invocation: true
 ---
 
@@ -16,19 +16,16 @@ Before starting, read: `../authoring-tests/SKILL.md`
 
 # Recently changed files
 
-!`jj diff --stat`
-
-If no files are changed, the consider all files in the current directory.
+```
+!`jj diff`
+```
 
 # Workflow
 
-1. Explore each deleted, updated, or added file:
-   1. Read the file if it still exists
-   2. Run `jj diff <file>` to view changes
-   3. Identify:
-      - Deleted logic
-      - Modified logic (new branches, edge cases, changed behavior)
-      - New logic
+1. Explore each deleted, updated, or added file, and identify:
+   - Deleted logic
+   - Modified logic (new branches, edge cases, changed behavior)
+   - New logic
 2. Find the test files that import or reference the changed code. Create them if
    missing
 3. Run the relevant tests
