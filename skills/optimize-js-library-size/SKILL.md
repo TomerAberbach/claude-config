@@ -1,10 +1,12 @@
 ---
 name: optimize-js-library-size
 description: Optimize JavaScript library size.
-disable-model-invocation: true
+argument-hint: '[path to the library or extra guidance]'
 ---
 
 Reduce the size of this JavaScript library.
+
+$ARGUMENTS
 
 # Goals
 

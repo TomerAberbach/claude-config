@@ -3,15 +3,24 @@ name: stratify
 description:
   Refactor code so each function, class, and module sits at a single level of
   abstraction and reads top-down as a narrative.
-arguments: target
-disable-model-invocation: true
+argument-hint: '[file, module, or function to refactor]'
 ---
 
 Refactor the target code so each function, class, and module sits at a single
 level of abstraction and reads top-down as a narrative: high-level intent on
 top, the mechanism that serves it extracted below.
 
-Target: $target
+# Target
+
+```!
+jj show --git
+```
+
+Arguments: $ARGUMENTS
+
+Refactor the target named in the arguments if given; otherwise the code changed
+in the current commit shown above; if there are no arguments and the commit has
+no changes, ask the user what to refactor and stop.
 
 # Principles
 
@@ -50,29 +59,25 @@ fits cleanly.
 
 # Workflow
 
-1. Identify the target:
-   - A file, module, or function named in the target
-   - Otherwise, the code most recently under discussion in the conversation
-   - If neither exists, ask the user what to refactor and stop
-2. Read the whole target once, plus the tests that cover it, to learn the
+1. Read the whole target once, plus the tests that cover it, to learn the
    behavior you must preserve. Note how to run those tests.
-3. For each function, class, and module, map its parts to their altitude (see
+2. For each function, class, and module, map its parts to their altitude (see
    "Spotting altitude mixing"): statements within a function, methods within a
    class, exports within a module. A unit is mixed when domain-level parts sit
    beside lower-level mechanism.
-4. If every unit already reads top-down at a single altitude, tell the user and
+3. If every unit already reads top-down at a single altitude, tell the user and
    stop. Don't manufacture extractions.
-5. For each mixed unit, decide what to extract by applying the principles as
+4. For each mixed unit, decide what to extract by applying the principles as
    tests. Skip cuts that don't clear all five.
-6. Apply the extractions one at a time. After each, run the covering tests or a
+5. Apply the extractions one at a time. After each, run the covering tests or a
    typecheck to confirm behavior is unchanged before moving on. If neither
    exists, tell the user verification is by inspection only, then make smaller,
    more conservative extractions and re-read each diff to confirm the move was
    pure.
-7. Once the unit is settled, order the definitions top-down where the language
+6. Once the unit is settled, order the definitions top-down where the language
    and the file's conventions allow: callers above the callees they invoke, so
    the file itself reads as a descent.
-8. Report what changed: the units refactored, the helpers extracted with their
+7. Report what changed: the units refactored, the helpers extracted with their
    names, and how you verified behavior held.
 
 # Spotting altitude mixing
@@ -109,8 +114,7 @@ fits cleanly.
 - Match the surrounding code's conventions: naming, parameter style, and idiom
   of the file you're in, even where they differ from your own defaults.
 - When the same extracted logic already exists elsewhere, this is reuse, not a
-  new helper. Follow `../reuse/SKILL.md` to decide whether to call the existing
-  code instead.
+  new helper. Load `/reuse` to decide whether to call the existing code instead.
 
 # Fixing mistakes
 

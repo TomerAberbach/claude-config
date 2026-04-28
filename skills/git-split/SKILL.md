@@ -3,6 +3,7 @@ name: git-split
 description:
   Split the current `git` commit into multiple focused, self-contained, easy to
   review commits.
+argument-hint: '[extra guidance on how to split]'
 allowed-tools:
   - Bash(git show *)
   - Bash(git log *)
@@ -11,7 +12,6 @@ allowed-tools:
   - Bash(git commit *)
   - Bash(git stash)
   - Bash(git stash pop)
-disable-model-invocation: true
 ---
 
 Split the current `git` commit into multiple focused, self-contained, easy to
@@ -22,6 +22,8 @@ review commits.
 ```!
 git show
 ```
+
+$ARGUMENTS
 
 # Principles
 

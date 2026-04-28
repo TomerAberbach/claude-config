@@ -3,6 +3,7 @@ name: jj-split
 description:
   Split the current `jj` commit into multiple focused, self-contained, easy to
   review commits.
+argument-hint: '[extra guidance on how to split]'
 allowed-tools:
   - Bash(jj show *)
   - Bash(jj log *)
@@ -13,7 +14,6 @@ allowed-tools:
   - Bash(jj edit *)
   - Bash(jj describe *)
   - Bash(jj squash *)
-disable-model-invocation: true
 ---
 
 Split the current `jj` commit into multiple focused, self-contained, easy to
@@ -24,6 +24,8 @@ review commits.
 ```!
 jj show --git
 ```
+
+$ARGUMENTS
 
 # Principles
 

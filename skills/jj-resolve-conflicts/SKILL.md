@@ -1,11 +1,11 @@
 ---
 name: jj-resolve-conflicts
 description: Resolve conflicts in the current `jj` commit.
+argument-hint: '[extra guidance on resolving]'
 allowed-tools:
   - Bash(jj resolve *)
   - Bash(jj op log *)
   - Bash(jj undo *)
-disable-model-invocation: true
 ---
 
 Resolve conflicts in the current `jj` commit.

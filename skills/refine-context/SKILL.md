@@ -1,15 +1,22 @@
 ---
 name: refine-context
 description: Iteratively improve a context document.
-arguments: document
-disable-model-invocation: true
+argument-hint: '[file path or document to refine]'
 ---
 
-# Document
+Iteratively improve the given context document.
 
+# Target
+
+```!
+jj show --git
 ```
-$document
-```
+
+Arguments: $ARGUMENTS
+
+Refine the target named in the arguments if given; otherwise the document
+changed in the current commit shown above; if there are no arguments and the
+commit has no changes, ask the user what to refine and stop.
 
 # Prepare
 

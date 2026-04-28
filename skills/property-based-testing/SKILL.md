@@ -11,7 +11,7 @@ paths:
 user-invocable: false
 ---
 
-Before starting, read: `../authoring-tests/SKILL.md`
+Before starting, load `/authoring-tests`.
 
 Adhere to these principles when writing property-based tests:
 

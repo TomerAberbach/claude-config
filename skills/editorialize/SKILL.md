@@ -3,30 +3,36 @@ name: editorialize
 description:
   Do an editorial review of a post or article and report findings ordered by
   importance.
-disable-model-invocation: true
+argument-hint: '[file path or text to review]'
 ---
 
 Do an editorial review of the given post or article. Report findings; don't edit
 the text.
 
-$ARGUMENTS
+# Target
+
+```!
+jj show --git
+```
+
+Arguments: $ARGUMENTS
+
+Review the target named in the arguments if given; otherwise the prose changed
+in the current commit shown above; if there are no arguments and the commit has
+no changes, ask the user what to review and stop.
 
 # Workflow
 
-1. Identify the target text:
-   - A file path or text in `$ARGUMENTS`
-   - Otherwise, the most recent draft under discussion in the conversation
-   - If neither exists, ask the user what to review and stop
-2. Read the whole piece once as a reader would, before critiquing
-3. Determine the intended audience and the point the piece argues for; the
+1. Read the whole piece once as a reader would, before critiquing
+2. Determine the intended audience and the point the piece argues for; the
    passes judge the piece against these
-4. Apply the passes in "Passes"
-5. If the passes surface nothing significant, tell the user the piece is in good
+3. Apply the passes in "Passes"
+4. If the passes surface nothing significant, tell the user the piece is in good
    shape and stop; don't manufacture findings
-6. Report findings in order of importance; a structural problem almost always
+5. Report findings in order of importance; a structural problem almost always
    outranks a line-level one. For each: what the problem is, where it occurs,
    why it weakens the piece, and a concrete suggestion
-7. Suggest `/strunkify` if the main weakness is loose prose rather than
+6. Suggest `/strunkify` if the main weakness is loose prose rather than
    substance or structure
 
 # Passes

@@ -3,7 +3,7 @@ name: adversarialize
 description:
   Perform a task with a worker agent, critique it with an adversary agent, and
   apply the accepted critiques with a reconciler agent.
-disable-model-invocation: true
+argument-hint: '[task or /command to run adversarially]'
 allowed-tools: Agent
 ---
 

@@ -2,7 +2,7 @@
 name: reconcile-claude-md
 description:
   Update the project's CLAUDE.md to match its current structure and conventions.
-disable-model-invocation: true
+argument-hint: '[extra guidance or areas to focus on]'
 ---
 
 Update the project's CLAUDE.md to match its current structure and conventions.
@@ -47,11 +47,11 @@ CLAUDE.md should have a shallow `tree`-style code block of the layout:
 
 - Annotate each entry with a one-line purpose comment. The comments are the
   value; an unannotated listing is derivable and doesn't belong
-- Keep it shallow: top-level directories and load-bearing files. Collapse
-  directories with uniform contents into one glob entry (e.g. `**/<name>/`)
-  annotated with the pattern its contents follow
+- Keep it shallow: top-level directories and key files. Collapse directories
+  with uniform contents into one glob entry (e.g. `**/<name>/`) annotated with
+  the pattern its contents follow
 - Add the section if missing. Prune entries that no longer exist, rename moved
-  ones, and add new load-bearing entries
+  ones, and add new key entries
 
 # What belongs
 

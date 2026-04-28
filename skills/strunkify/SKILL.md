@@ -3,24 +3,30 @@ name: strunkify
 description:
   Make prose terse and tight in the style of The Elements of Style by Strunk &
   White.
-disable-model-invocation: true
+argument-hint: '[file path or text to tighten]'
 ---
 
 Make the given prose terse and tight in the style of The Elements of Style by
 Strunk & White.
 
-$ARGUMENTS
+# Target
+
+```!
+jj show --git
+```
+
+Arguments: $ARGUMENTS
+
+Tighten the target named in the arguments if given; otherwise the prose changed
+in the current commit shown above; if there are no arguments and the commit has
+no changes, ask the user what to tighten and stop.
 
 # Workflow
 
-1. Identify the target text:
-   - A file path or text in `$ARGUMENTS`
-   - Otherwise, the most recent prose under discussion in the conversation
-   - If neither exists, ask the user what to strunkify and stop
-2. If the text is already tight, tell the user and stop
-3. Apply the passes in "Passes" to the text
-4. For a file, edit it in place. Otherwise, output the revised text
-5. Report the word count before and after
+1. If the text is already tight, tell the user and stop
+2. Apply the passes in "Passes" to the text
+3. For a file, edit it in place. Otherwise, output the revised text
+4. Report the word count before and after
 
 # Passes
 

@@ -4,20 +4,25 @@ description:
   Find opportunities for code reuse in the changed code, both against existing
   code and within the change itself, without creating bad coupling or contrived
   abstractions.
-disable-model-invocation: true
+argument-hint: '[extra guidance or files to focus on]'
 ---
 
 Find opportunities for code reuse in the changed code, both against existing
 code and within the change itself, without creating bad coupling or contrived
 abstractions.
 
-# Recently changed files
+# Target
 
 ```!
 jj show --git
 ```
 
-$ARGUMENTS
+Arguments: $ARGUMENTS
+
+Find reuse opportunities in the target named in the arguments if given;
+otherwise the changes in the current commit shown above; if there are no
+arguments and the commit has no changes, ask the user which code to review and
+stop.
 
 # Principles
 

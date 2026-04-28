@@ -1,12 +1,12 @@
 ---
 name: reconcile-tests
 description: Add, update, or delete tests for changes in the current commit.
-disable-model-invocation: true
+argument-hint: '[extra guidance or areas to focus on]'
 ---
 
 Add, update, or delete tests for changes made in the current `jj` commit.
 
-Before starting, read: `../authoring-tests/SKILL.md`
+Before starting, load `/authoring-tests`.
 
 # Goals
 
@@ -14,13 +14,17 @@ Before starting, read: `../authoring-tests/SKILL.md`
 - Update outdated test expectations
 - Add tests for new behaviors
 
-# Recently changed files
+# Target
 
 ```!
 jj show --git
 ```
 
-$ARGUMENTS
+Arguments: $ARGUMENTS
+
+Reconcile tests for the target named in the arguments if given; otherwise the
+changes in the current commit shown above; if there are no arguments and the
+commit has no changes, ask the user what to reconcile tests for and stop.
 
 # Workflow
 
