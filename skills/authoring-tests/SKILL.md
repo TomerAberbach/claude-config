@@ -3,6 +3,11 @@ name: authoring-tests
 description: |
   Use when writing, reviewing, or modifying any test files, or when asked to add
   test coverage.
+paths:
+  - '**/*.test.{js,cjs,mjs,jsx,cjsx,mjsx,ts,cts,mts,tsx,ctsx,mtsx}'
+  - '**/*.spec.{js,cjs,mjs,jsx,cjsx,mjsx,ts,cts,mts,tsx,ctsx,mtsx}'
+  - 'tests/**/*'
+  - 'testing/**/*'
 user-invocable: false
 ---
 

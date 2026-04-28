@@ -41,6 +41,23 @@
     ],
     "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/tomer/.claude/statusline-command.sh"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude is waiting\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ]
+  },
+  "showClearContextOnPlanAccept": true,
   "enableAllProjectMcpServers": true,
   "spinnerTipsEnabled": false,
   "spinnerVerbs": {
