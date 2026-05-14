@@ -37,6 +37,8 @@
       "Bash(pnpm run test *)",
       "Bash(pnpm run coverage *)",
       "Bash(pnpm run build *)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
       "mcp__ide__getDiagnostics"
     ],
     "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
