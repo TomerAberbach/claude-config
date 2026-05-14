@@ -3,6 +3,11 @@ name: property-based-testing
 description: |
   Use when writing, reviewing, or modifying property-based tests, such as those
   using `fast-check`, or when asked to add test coverage.
+paths:
+  - '**/*.test.{js,cjs,mjs,jsx,cjsx,mjsx,ts,cts,mts,tsx,ctsx,mtsx}'
+  - '**/*.spec.{js,cjs,mjs,jsx,cjsx,mjsx,ts,cts,mts,tsx,ctsx,mtsx}'
+  - 'tests/**/*'
+  - 'testing/**/*'
 user-invocable: false
 ---
 
