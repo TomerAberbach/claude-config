@@ -17,7 +17,7 @@ Before starting, read: `../authoring-tests/SKILL.md`
 # Recently changed files
 
 ```!
-jj diff
+jj show --git
 ```
 
 $ARGUMENTS

@@ -18,7 +18,7 @@ current `jj` commit.
 # Recently changed files
 
 ```!
-jj diff
+jj show --git
 ```
 
 $ARGUMENTS

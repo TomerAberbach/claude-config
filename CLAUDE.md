@@ -8,11 +8,10 @@
 
 # Code style
 
-- Place classes/functions in decreasing order of abstraction (using before used)
-- Extract well-named variables or functions to guide the reader and reduce the
-  need for comments
-- Never include implementation details in API documentation (e.g. function,
-  class, etc. comments)
+- Place classes/functions in decreasing order of abstraction (callers before
+  callees)
+- Extract well-named variables or functions to guide the reader
+- No implementation details in function, class, or other API comments
 - Only write comments to explain the “why” behind code, never the "what"
 - Early `return`/`continue`/`break` to reduce nesting
 
@@ -28,7 +27,7 @@
 
 - Use `node --input-type=module << 'EOF' ... EOF` to test hypotheses about JS/TS
   code, and ensure you're using the right default or named export if you
-  encounter a `SyntaxError`. Prefer `Bash` for everything else.
+  encounter a `SyntaxError`. Prefer `Bash` for everything else
 
 ### Code style
 
