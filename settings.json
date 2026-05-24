@@ -43,10 +43,7 @@
     ],
     "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "bash /Users/tomer/.claude/statusline-command.sh"
-  },
+  "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
       {
@@ -59,8 +56,10 @@
       }
     ]
   },
-  "showClearContextOnPlanAccept": true,
-  "enableAllProjectMcpServers": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/tomer/.claude/statusline-command.sh"
+  },
   "spinnerTipsEnabled": false,
   "spinnerVerbs": {
     "mode": "replace",
@@ -85,5 +84,7 @@
       "Tamping",
       "Weighing"
     ]
-  }
+  },
+  "showClearContextOnPlanAccept": true,
+  "model": "opus"
 }
