@@ -10,6 +10,8 @@
 !license
 !readme.md
 
+!hooks
+!hooks/**
 !skills
 !skills/**
 !CLAUDE.md
