@@ -4,7 +4,6 @@
 
 # Workflow
 
-- Always start a worktree before making any code changes
 - Run individual tests, not the whole test suite
 
 # Code style

@@ -39,10 +39,12 @@
       "Bash(pnpm run build *)",
       "WebSearch",
       "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
       "mcp__ide__getDiagnostics"
     ],
     "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
   },
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -106,5 +108,5 @@
     ]
   },
   "showClearContextOnPlanAccept": true,
-  "model": "opus"
+  "effortLevel": "high"
 }
