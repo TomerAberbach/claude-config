@@ -11,6 +11,7 @@
       "Read",
       "Grep",
       "Bash(find *)",
+      "Bash(ls *)",
       "Bash(grep *)",
       "Bash(cat *)",
       "Bash(head *)",
@@ -46,6 +47,7 @@
     "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
   },
   "model": "claude-fable-5[1m]",
+  "effortLevel": "medium",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -118,6 +120,5 @@
       "Weighing"
     ]
   },
-  "effortLevel": "high",
   "showClearContextOnPlanAccept": true
 }
