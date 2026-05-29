@@ -6,15 +6,6 @@
 
 - Run individual tests, not the whole test suite
 
-# Code style
-
-- Place classes/functions in decreasing order of abstraction (callers before
-  callees)
-- Extract well-named variables or functions to guide the reader
-- No implementation details in function, class, or other API comments
-- Only write comments to explain the “why” behind code, never the "what"
-- Early `return`/`continue`/`break` to reduce nesting
-
 ## JavaScript/TypeScript
 
 ### Tools

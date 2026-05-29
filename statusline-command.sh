@@ -14,19 +14,14 @@ BRIGHT_RED=$'\033[31m'
 SEP="${DIM}│${RESET}"
 
 model=$(echo "$input" | jq -r '.model.display_name // "Unknown model"')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // "?"')
 
 used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+remaining_pct=$(echo "$input" | jq -r '.context_window.remaining_percentage // empty')
 total_in=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 total_out=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
-max_tokens=$(echo "$input" | jq -r '.context_window.max_tokens // empty')
-# Fall back to model-based lookup. All current Claude models are 200k.
-if [ -z "$max_tokens" ] || [ "$max_tokens" = "0" ]; then
-  model_id=$(echo "$input" | jq -r '.model.id // .model.api_name // empty' | tr '[:upper:]' '[:lower:]')
-  case "$model_id" in
-    *claude*) max_tokens=200000 ;;
-  esac
-fi
+max_tokens=$(echo "$input" | jq -r '.context_window.context_window_size // empty')
 
 fmt_tokens() {
   local n=$1
@@ -57,12 +52,13 @@ if [ -n "$used_pct" ]; then
 
   remaining=""
   if [ -n "$max_tokens" ] && [ "$max_tokens" -gt 0 ]; then
-    used_abs=$(echo "$input" | jq -r '.context_window.used_tokens // empty')
+    used_abs=$(echo "$input" | jq -r '.context_window.total_input_tokens // empty')
     if [ -n "$used_abs" ]; then
       left=$((max_tokens - used_abs))
       remaining=" ${DIM}~$(fmt_tokens "$left") left${RESET}"
     else
-      left=$(echo "scale=0; $max_tokens * (100 - $used_pct) / 100" | bc)
+      pct_left=${remaining_pct:-$(echo "100 - $used_pct" | bc)}
+      left=$(echo "scale=0; $max_tokens * $pct_left / 100" | bc)
       remaining=" ${DIM}~$(fmt_tokens "$left") left${RESET}"
     fi
   fi
@@ -109,6 +105,7 @@ if command -v jj &>/dev/null && [ -n "$cwd" ] && [ "$cwd" != "?" ]; then
 fi
 
 model_seg="${BOLD}◆${RESET} ${model}"
+[ -n "$effort" ] && model_seg="${model_seg} ${DIM}(${effort})${RESET}"
 out="${model_seg} ${SEP} ${ctx_seg} ${SEP} ${tokens}"
 [ -n "$limits_seg" ] && out="${out} ${SEP} ${limits_seg}"
 out="${out}${jj_seg}"

@@ -6,6 +6,7 @@
   },
   "includeGitInstructions": false,
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "Read",
       "Grep",
@@ -44,7 +45,7 @@
     ],
     "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
   },
-  "model": "opus",
+  "model": "claude-fable-5[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -88,6 +89,7 @@
     "verbs": [
       "Brewing",
       "Burring",
+      "Caffeinating",
       "Dialing",
       "Dosing",
       "Extracting",
@@ -107,6 +109,6 @@
       "Weighing"
     ]
   },
-  "showClearContextOnPlanAccept": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "showClearContextOnPlanAccept": true
 }

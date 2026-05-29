@@ -13,7 +13,7 @@ user-invocable: false
 
 Adhere to these principles when writing tests:
 
-- Use arrange-act-assert:
+- Use arrange-act-assert with empty lines in between:
   1. Arrange: set up the requisite state and inputs.
   2. Act: run the code that triggers the behavior under test.
   3. Assert: assert the expected outcomes.
