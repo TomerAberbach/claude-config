@@ -1,12 +1,16 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "fileSuggestion": {
+    "type": "command",
+    "command": "/Users/tomer/.claude/file-suggestion.sh"
+  },
+  "respectGitignore": false,
   "attribution": {
     "commit": "",
     "pr": ""
   },
   "includeGitInstructions": false,
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "Read",
       "Grep",
@@ -44,10 +48,9 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "mcp__ide__getDiagnostics"
     ],
-    "deny": ["Bash(git *)", "Bash(tsc *)", "Bash(npm *)"]
+    "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
-  "effortLevel": "medium",
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -85,11 +88,6 @@
     "type": "command",
     "command": "bash /Users/tomer/.claude/statusline-command.sh"
   },
-  "fileSuggestion": {
-    "type": "command",
-    "command": "/Users/tomer/.claude/file-suggestion.sh"
-  },
-  "respectGitignore": false,
   "spinnerTipsEnabled": false,
   "spinnerVerbs": {
     "mode": "replace",
@@ -120,5 +118,7 @@
       "Weighing"
     ]
   },
-  "showClearContextOnPlanAccept": true
+  "effortLevel": "high",
+  "showClearContextOnPlanAccept": true,
+  "skipWorkflowUsageWarning": true
 }
