@@ -120,5 +120,6 @@
   },
   "effortLevel": "high",
   "showClearContextOnPlanAccept": true,
-  "skipWorkflowUsageWarning": true
+  "skipWorkflowUsageWarning": true,
+  "tui": "fullscreen"
 }
