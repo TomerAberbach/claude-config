@@ -94,8 +94,8 @@ reason from first principles when none fits cleanly.
   and future. A clause naming who calls it or how a specific caller uses it
   (`// called by the checkout flow to total the cart`,
   `// the dashboard relies on this being sorted`) is stale-prone and overly
-  prescriptive: callers come and go, the code records who calls what, and the doc
-  shouldn't presume one caller's use is the API's purpose. Trim the caller
+  prescriptive: callers come and go, the code records who calls what, and the
+  doc shouldn't presume one caller's use is the API's purpose. Trim the caller
   clause; keep whatever describes the API. If the caller's usage reveals a real
   contract (the result must be sorted, say), restate it as an API invariant, not
   a fact about that caller.
