@@ -50,7 +50,6 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -118,8 +117,9 @@
       "Weighing"
     ]
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "showClearContextOnPlanAccept": true,
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
-  "tui": "fullscreen"
+  "agentPushNotifEnabled": true
 }
