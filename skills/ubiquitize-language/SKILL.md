@@ -1,6 +1,6 @@
 ---
 name: ubiquitize-language
-description:
+description: |
   Extract a DDD-style ubiquitous language glossary.md file from the current
   conversation and codebase, flagging ambiguities and proposing canonical terms.
 argument-hint: '[extra guidance or terms to focus on]'
@@ -18,9 +18,9 @@ $ARGUMENTS
    actions (a verb like _settle_ is a term defined by what it means in the
    domain)
 3. Identify problems:
-   - Same term used for different concepts (ambiguity). Exclude genuine
-     homographs: same word with unrelated meanings from different roots or
-     domains is fine; flag a word whose meaning has drifted within one domain
+   - Same term used for different concepts (ambiguity). Exclude homographs: a
+     word with unrelated meanings from different roots or domains is fine. Flag
+     a word whose meaning has drifted within one domain
    - Different terms used for the same concept (synonyms)
    - Vague or overloaded terms
 4. Propose a canonical glossary:
@@ -28,10 +28,11 @@ $ARGUMENTS
      the others as aliases to avoid
    - Skip the names of modules, classes, and generic programming constructs
      unless they have domain-specific meaning
-   - Update existing definitions if understanding has evolved
+   - Update an existing definition when the conversation or codebase contradicts
+     it
 5. Upsert `glossary.md` in the current working directory using the format below
-6. Output a summary inline: lead with the problems found (ambiguities, synonyms,
-   vague terms), then list the terms added or changed
+6. Output a summary inline: lead with the problems found, then list the terms
+   added or changed
 
 # Output format
 
@@ -59,13 +60,13 @@ $ARGUMENTS
 
 ## Rules
 
-- Keep definitions tight. One sentence max. For an entity, define what it _is_,
-  not what it does (e.g. **Order** is a request, not "lets customers buy"). For
-  an action term, define its effect in the domain.
-- When natural clusters emerge (e.g. by subdomain, lifecycle, or actor), give
-  each group its own heading and table. If all terms belong to one cohesive
-  domain, use a single table under the top-level heading. Don't force groupings.
-- Use bold term names and express cardinality where obvious.
+- Keep each definition to one sentence. For an entity, define what it _is_, not
+  what it does. **Order** is a request, not "lets customers buy". For an action
+  term, define its effect in the domain
+- When the terms cluster by subdomain, lifecycle, or actor, give each cluster
+  its own heading and table. If all terms belong to one domain, use a single
+  table under the top-level heading
+- Use bold term names and express cardinality where obvious
 
 ## Example
 

@@ -1,6 +1,7 @@
 ---
 name: refine-context
-description: Iteratively improve a context document.
+description: |
+  Iteratively improve a context document.
 argument-hint: '[file path or document to refine]'
 ---
 
@@ -14,24 +15,24 @@ jj show --git
 
 Arguments: $ARGUMENTS
 
-Refine the target named in the arguments if given; otherwise the document
-changed in the current commit shown above; if there are no arguments and the
+Refine the target named in the arguments if given. Otherwise refine the document
+changed in the current commit shown above. If there are no arguments and the
 commit has no changes, ask the user what to refine and stop.
 
 # Prepare
 
-- Break prose into point form before iterating. One claim per bullet.
+- Break prose into point form before iterating. One claim per bullet
 
 # Iterate
 
 - What are the ambiguities?
 - What are the internal contradictions?
-- Can any parts be fused?
+- Can any parts be merged?
 - Are the most important things first?
-- Is the communication specific?
-- Is the communication concise?
+- Is the document specific?
+- Is the document concise?
 - What would the reader already know?
 
 # Apply
 
-- One question per iteration.
+- One question per iteration

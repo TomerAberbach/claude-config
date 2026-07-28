@@ -52,6 +52,17 @@
   },
   "enableAllProjectMcpServers": true,
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/validate-skill-frontmatter.mjs"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "hooks": [

@@ -1,17 +1,11 @@
 ---
 name: reconcile-claude-md
-description:
+description: |
   Update the project's CLAUDE.md to match its current structure and conventions.
 argument-hint: '[extra guidance or areas to focus on]'
 ---
 
 Update the project's CLAUDE.md to match its current structure and conventions.
-
-# Goals
-
-- Delete guidance about structure or conventions that no longer exist
-- Update outdated commands, paths, and names
-- Add guidance for conventions Claude can't derive from the code
 
 # Current CLAUDE.md
 
@@ -20,6 +14,12 @@ cat CLAUDE.md
 ```
 
 $ARGUMENTS
+
+# Goals
+
+- Delete guidance about structure or conventions that no longer exist
+- Update outdated commands, paths, and names
+- Add guidance for conventions Claude can't derive from the code
 
 # Workflow
 
@@ -45,8 +45,8 @@ $ARGUMENTS
 
 CLAUDE.md should have a shallow `tree`-style code block of the layout:
 
-- Annotate each entry with a one-line purpose comment. The comments are the
-  value; an unannotated listing is derivable and doesn't belong
+- Annotate each entry with a one-line purpose comment. An unannotated listing is
+  derivable and doesn't belong
 - Keep it shallow: top-level directories and key files. Collapse directories
   with uniform contents into one glob entry (e.g. `**/<name>/`) annotated with
   the pattern its contents follow
@@ -55,7 +55,7 @@ CLAUDE.md should have a shallow `tree`-style code block of the layout:
 
 # What belongs
 
-CLAUDE.md earns its tokens only with facts Claude can't cheaply derive:
+CLAUDE.md should record only facts Claude can't cheaply derive:
 
 - Keep: the annotated structure tree, tool and command choices among
   alternatives, conventions not enforced by tooling, invisible constraints
@@ -63,4 +63,5 @@ CLAUDE.md earns its tokens only with facts Claude can't cheaply derive:
 - Cut: unannotated file listings, anything a config file already states, lint
   rules the linter enforces, standard tool usage
 
-These aren't exhaustive. Reason from first principles when none fits cleanly.
+These aren't exhaustive. Judge anything they don't cover by whether Claude can
+derive it.

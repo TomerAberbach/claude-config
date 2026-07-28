@@ -1,6 +1,7 @@
 ---
 name: optimize-js-library-size
-description: Optimize JavaScript library size.
+description: |
+  Optimize JavaScript library size.
 argument-hint: '[path to the library or extra guidance]'
 ---
 
@@ -12,13 +13,13 @@ $ARGUMENTS
 
 - Reduce the minified and gzipped/brotli minified size
 - NEVER reduce minified size at the expense of gzipped/brotli minified size
-- ALWAYS preserve the public API surface
-- Focus on large structural changes instead of small wins
+- ALWAYS preserve the public API
+- Focus on large structural changes instead of small savings
 
 # Workflow
 
 1. Read and understand the library structure
-2. Run relevant tests and note which ones already fail (do NOT fix them)
+2. Run relevant tests and note which ones already fail. Do NOT fix them
 3. Measure size
 4. Optimize
 5. Rebuild
@@ -38,7 +39,7 @@ $ARGUMENTS
     ecma: 2020,
     module: true,
     toplevel: true,
-    // Run multiple times
+    // Run the compressor multiple times
     compress: {
       passes: 3,
     },
@@ -78,10 +79,10 @@ $ARGUMENTS
   properties
 - Replace internal classes with closures returning objects
 - Inline single-use functions that don't add clarity
-- Restructure single-use functions that add clarity to be inlinable by `terser`
+- Restructure single-use functions that add clarity so `terser` can inline them
 - Replace `function`s with arrow functions
 - Replace `switch` with `if` and `else`
 - Replace `===`/`!==` with `==`/`!=` when it doesn't change behavior
 - Replace strict checks with truthy/falsy checks when it doesn't change behavior
 
-These aren't exhaustive. Reason from first principles when none fits cleanly.
+These aren't exhaustive. Reason from first principles when none fits.

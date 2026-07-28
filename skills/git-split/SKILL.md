@@ -1,6 +1,6 @@
 ---
 name: git-split
-description:
+description: |
   Split the current `git` commit into multiple focused, self-contained, easy to
   review commits.
 argument-hint: '[extra guidance on how to split]'
@@ -29,12 +29,12 @@ $ARGUMENTS
 
 - One concern per commit: e.g. bug fix, feature, refactor, or config change
 - Each commit passes all checks: format, lint, typecheck, build, test
-- Tests travel with the code they test
-- Refactors are never mixed with behavioral changes
+- Commit tests with the code they test
+- Never mix refactors with behavioral changes
 - Prefer thin vertical slices, one complete feature end-to-end, over horizontal
   layers
-- No orphaned code: every added API, abstraction, or stub must be used within
-  the same commit. Don't split so small that dead code is introduced
+- Use every added API, abstraction, or stub within the same commit. Don't split
+  so small that a commit introduces dead code
 
 # Workflow
 
@@ -42,8 +42,8 @@ $ARGUMENTS
    the user and stop
 2. Identify logical groupings and order them from most foundational to most
    dependent. When a boundary is ambiguous, keep changes together
-3. Infer verification commands from project signals (e.g. `package.json`,
-   `Makefile`, CI config). If no signals are found, ask the user
+3. Infer verification commands from project files (e.g. `package.json`,
+   `Makefile`, CI config). If there are none, ask the user
 4. Present the plan as a numbered list:
    - Commit N: `<imperative-mood description>: <file or hunk list>`
    - One sentence justifying each split boundary
@@ -73,10 +73,9 @@ git commit -m "<first commit description>"
 
 ## By hunk
 
-When a single file contains changes that belong in different commits, use file
-manipulation:
+When a single file contains changes that belong in different commits:
 
-1. Edit the file to contain **only** the changes for the first commit (remove
-   hunks that belong later)
+1. Edit the file to contain only the changes for the first commit, removing the
+   hunks that belong later
 2. Stage and commit it
 3. Re-edit the file to restore the removed hunks before the next commit

@@ -1,6 +1,7 @@
 ---
 name: jj-resolve-conflicts
-description: Resolve conflicts in the current `jj` commit.
+description: |
+  Resolve conflicts in the current `jj` commit.
 argument-hint: '[extra guidance on resolving]'
 allowed-tools:
   - Bash(jj resolve *)
@@ -21,8 +22,7 @@ $ARGUMENTS
 # Principles
 
 - A resolution preserves the intent of both sides, not just their text. When
-  both sides changed the same logic, produce code that does what each side set
-  out to do
+  both sides changed the same logic, produce code that satisfies both intents
 - Never delete a conflict marker without understanding what each side changed
   and why
 - The resolved commit passes all checks: format, lint, typecheck, build, test
@@ -38,15 +38,15 @@ $ARGUMENTS
 4. For each conflicted file:
    - Read the file. Conflicts are materialized with markers (see "Reading
      conflict markers")
-   - If one side should win wholesale, run `jj resolve --tool :ours <file>`
-     (side #1) or `jj resolve --tool :theirs <file>` (side #2)
-   - Otherwise edit the file to the semantic merge of both sides and remove the
-     markers. When the markers alone are unclear, view each side's full file
-     with `jj file show -r <revision> <file>`
+   - If one side should win entirely, run `jj resolve --tool :ours <file>` (side
+     #1) or `jj resolve --tool :theirs <file>` (side #2)
+   - Otherwise edit the file to a merge that preserves both sides' intent and
+     remove the markers. When the markers alone are unclear, view each side's
+     full file with `jj file show -r <revision> <file>`
 5. Verify all conflicts are gone: `jj resolve --list` should report none and
    `jj st` should show no conflicted paths
-6. Infer verification commands from project signals (e.g. `package.json`,
-   `Makefile`, CI config) and run them. If no signals are found, ask the user
+6. Infer verification commands from the project's files (e.g. `package.json`,
+   `Makefile`, CI config) and run them. If there are none, ask the user
 7. jj propagates the resolution to descendants of `@` automatically. Run
    `jj log -r 'conflicts()'`; any conflicts that remain are distinct and need
    their own resolution
@@ -68,8 +68,8 @@ side #2's version of the region
 - The `%%%%%%%` section is a diff: lines starting with `-` are the base, lines
   starting with `+` are side #1's edit, and unprefixed lines are context
 - The `+++++++` section is side #2's full content for the region
-- To resolve, apply side #1's diff to side #2's content, then reconcile whatever
-  still disagrees
+- To resolve, apply side #1's diff to side #2's content, then reconcile the
+  parts that still differ
 
 # Fixing mistakes
 

@@ -13,96 +13,96 @@ user-invocable: false
 
 Before starting, load `/authoring-tests`.
 
-Adhere to these principles when writing property-based tests:
+Follow these principles when writing property-based tests:
 
-- Write focused properties with focused arbitraries to properly explore slices
-  of the input space.
+- Write focused properties with focused arbitraries to explore slices of the
+  input space
 
 - Prefer arbitraries that generate the desired input space directly instead of
-  generating a larger input space and then filtering it down.
+  generating a larger input space and then filtering it
 
-- Keep assertions focused only on what's straightforward to infer from the input
-  arbitraries. It's often infeasible assert the full value. If no assertion
-  seems feasible, then the input space is too broad.
+- Assert only what's straightforward to infer from the input arbitraries.
+  Asserting the full value is often infeasible. If no assertion seems feasible,
+  then the input space is too broad
 
-- NEVER unnecessarily constrain an arbitrary. Only add constraints if it's
-  necessary to satisfy the property or resolve performance problems.
+- NEVER constrain an arbitrary unless the constraint is necessary to satisfy the
+  property or to resolve a performance problem
 
 # Common properties
 
 - "Output is always/never X for all inputs". Example: for any number `n`,
-  `Math.floor(n)` is an integer.
+  `Math.floor(n)` is an integer
 
 - "When input is X, then output is always/never Y". Example: for any array
   `data` with no duplicates, the result of removing duplicates from `data` is
-  `data` itself.
+  `data` itself
 
 - "Complex implementation X is equivalent to simpler implementation Y". Example:
   "`c` is contained inside sorted array `data` for binary search" is equivalent
-  to "`c` is contained inside `data` for linear search".
+  to "`c` is contained inside `data` for linear search"
 
-- Totality: function returns (doesn't throw) for all valid inputs. Example:
-  `JSON.parse(JSON.stringify(x))` never throws for serializable `x`.
+- Totality: function returns rather than throwing for all valid inputs. Example:
+  `JSON.parse(JSON.stringify(x))` never throws for serializable `x`
 
 - Deterministic: always returns the same output for the same input. Example: for
-  any date `d`, `formatDate(d)` always returns the same string.
+  any date `d`, `formatDate(d)` always returns the same string
 
 - Side-effect free: does not mutate the input or non-local state. Example: for
-  any array `data`, `sorted(data)` leaves `data` unchanged.
+  any array `data`, `sorted(data)` leaves `data` unchanged
 
 - Bounded output: output is always within a known range. Example:
-  `clamp(x, low, high)` always returns a value between `low` and `high`.
+  `clamp(x, low, high)` always returns a value between `low` and `high`
 
 - Structural invariant: output always has a guaranteed shape/structure. Example:
   `partition(predicate, data)` always produces two arrays whose combined length
-  equals `data.length`.
+  equals `data.length`
 
 - Closure under operation: applying `f` to valid inputs always produces a valid
   output of the same type/domain. Example: `add(positiveInt, positiveInt)` is
-  always a positive integer.
+  always a positive integer
 
 - Identity element: there exists an input that leaves output unchanged. Example:
-  `concat(xs, [])` equals `xs`.
+  `concat(xs, [])` equals `xs`
 
 - Absorption/annihilation: certain inputs collapse the result regardless of the
-  other. Example: `and(false, x)` is always `false`.
+  other. Example: `and(false, x)` is always `false`
 
 - Idempotent: running twice is the same as running once, either in its effect on
   non-local state or when passing its first output as its second input. Example:
-  for any array `data`, `sort(sort(data))` equals `sort(data)`.
+  for any array `data`, `sort(sort(data))` equals `sort(data)`
 
 - Commutative: rearranging argument order doesn't affect output. Example: for
-  any numbers `a` and `b`, `add(a, b)` equals `add(b, a)`.
+  any numbers `a` and `b`, `add(a, b)` equals `add(b, a)`
 
 - Associative: regrouping arguments for multiple calls doesn't affect output.
-  Example: `concat(concat(a, b), c)` equals `concat(a, concat(b, c))`.
+  Example: `concat(concat(a, b), c)` equals `concat(a, concat(b, c))`
 
 - Distributive: `f(a ∪ b) === f(a) ∪ f(b)`. Example: `map(f, [...xs, ...ys])`
-  equals `[...map(f, xs), ...map(f, ys)]`.
+  equals `[...map(f, xs), ...map(f, ys)]`
 
 - Inverse/symmetry/roundtrips: `f` and `g` are inverses of each other. Example:
-  `decode(encode(x))` equals `x`.
+  `decode(encode(x))` equals `x`
 
 - Transitivity: if `f(a, b)` and `f(b, c)`, then `f(a, c)`. Example: if
-  `isAncestor(a, b)` and `isAncestor(b, c)`, then `isAncestor(a, c)`.
+  `isAncestor(a, b)` and `isAncestor(b, c)`, then `isAncestor(a, c)`
 
 - Monotonic: if input increases (or decreases), output always changes in the
-  same direction. Example: sorting more elements never produces fewer elements.
+  same direction. Example: sorting more elements never produces fewer elements
 
-- Consistent ordering: if `a` comes before `b` in the input, the relative order
-  is preserved in the output. Example: a stable sort never reorders equal
-  elements relative to each other.
+- Consistent ordering: if `a` comes before `b` in the input, the output keeps
+  that order. Example: a stable sort never reorders equal elements relative to
+  each other
 
 - Prefix/suffix closure: if `f(x)` holds, it holds for any sub-input, or
   conversely, for any superset. Example: if `isValid(data)` then
-  `isValid(data.slice(0, n))` for all `n`.
+  `isValid(data.slice(0, n))` for all `n`
 
-These aren't exhaustive. Reason from first principles when none fits cleanly.
+These aren't exhaustive. Reason from first principles when none fits.
 
 # `fast-check` tips
 
-- Use `fc.clone(arb, count)` to produce multiple equal value instead of using
-  `structuredClone` or `JSON.parse(JSON.stringify(...))`.
+- Use `fc.clone(arb, count)` to produce multiple equal values instead of
+  `structuredClone` or `JSON.parse(JSON.stringify(...))`
 
 - Use `fc.uniqueArray(arb, { minLength, maxLength })` to produce unique values
-  instead of using `fc.tuple(...arbs).filter(...)`.
+  instead of `fc.tuple(...arbs).filter(...)`

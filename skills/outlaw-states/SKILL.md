@@ -1,6 +1,6 @@
 ---
 name: outlaw-states
-description:
+description: |
   Remove illegal states from data structures by redesigning their types so the
   illegal states cannot be represented at all.
 argument-hint: '[file, type, or data structure to tighten]'
@@ -19,9 +19,9 @@ jj show --git
 
 Arguments: $ARGUMENTS
 
-Tighten the target named in the arguments if given; otherwise the code changed
-in the current commit shown above; if there are no arguments and the commit has
-no changes, ask the user what to tighten and stop.
+Tighten the target named in the arguments if given. Otherwise tighten the code
+changed in the current commit shown above. If there are no arguments and the
+commit has no changes, ask the user what to tighten and stop.
 
 # Principles
 
@@ -29,103 +29,103 @@ no changes, ask the user what to tighten and stop.
   The signals are runtime guards against "impossible" cases: validation that
   rejects combinations of fields, assertions that a variant's fields are
   populated, comments like "only set when status is X", errors thrown from
-  branches that "can't happen".
+  branches that "can't happen"
 - Make the type fit the states, not the states fit the type. Count the states
   the type can represent and the states the program has. When the first exceeds
-  the second, reshape the type until they match; don't add more guards.
+  the second, reshape the type until they match. Don't add more guards
 - Parse, don't validate. Check raw input once at the boundary and convert it
-  into a type that carries the proof, so code past the boundary needs no
+  into a type that is proof the check ran, so code past the boundary needs no
   re-checking. A function that inspects data and returns a boolean forces every
   later reader to trust the check happened; a function that returns a narrower
-  type makes the check impossible to skip.
+  type makes the check impossible to skip
 - Push the change to where the data is created. Constructing an illegal value
   should fail at the construction site, at compile time where the language
-  allows, not at a runtime check downstream. If a tightening merely moves a
-  guard from one downstream function to another, the state is still
-  representable; the fix is a type or constructor no illegal value can pass
-  through.
+  allows, not at a runtime check downstream. If a tightening moves a guard from
+  one downstream function to another, the state is still representable. The fix
+  is a type or constructor no illegal value can pass through
 - Preserve behavior for valid states. This is a representation change: every
   valid state maps to exactly one value of the new type, and the program's
   observable behavior on valid inputs is unchanged. Unlike a pure refactor, the
-  type's shape changes on purpose; callers that construct or match on the type
-  must change, and that is the point.
+  type's shape changes on purpose. Callers that construct or match on the type
+  must change
 - Weigh the tightening against the churn. A type touched by half the codebase
   costs more to reshape than a guard costs to keep. Tighten when the illegal
   state has caused or plausibly will cause a bug, or when the guards outweigh
-  the churn; leave a benign representation alone.
+  the churn. Leave a benign representation alone
 
 These principles double as the test for a tightening: make one only when it
-deletes a guard or an impossible branch AND every valid state survives. They
-aren't exhaustive; reason from first principles when none fits cleanly.
+deletes a guard or an impossible branch AND every valid state remains
+representable. They aren't exhaustive. Reason from first principles when none
+fits cleanly.
 
 # Workflow
 
 1. Read the whole target once, plus the tests that cover it, to learn which
-   states are valid. Note how to run those tests and the typecheck.
+   states are valid. Note how to run those tests and the typecheck
 2. Inventory the illegal states: for each data structure, list the values its
    type admits that the program treats as impossible (see "Spotting illegal
-   states"). The guards, assertions, and comments show where those states are.
+   states"). The guards, assertions, and comments show where those states are
 3. If every type already admits only valid states, tell the user and stop. Don't
-   manufacture redesigns.
+   manufacture redesigns
 4. For each illegal state, pick a technique that removes it (see "Techniques")
-   and apply the principles as tests. Skip tightenings that fail the churn test;
-   report those as deliberate keeps.
+   and apply the principles as tests. Skip tightenings that fail the churn test
+   and report those as deliberate keeps
 5. Apply the tightenings one at a time. For each: reshape the type, update every
    construction and use site, and delete the guards and impossible branches the
    new type obsoletes. Run the typecheck and the covering tests before moving
    on. If the language has no static types, encode the constraint in the
    constructor (smart constructor, factory) so illegal construction fails at the
-   one place values are created, and verify with the tests.
+   only place values are created, and verify with the tests
 6. At each boundary that receives raw data (parsers, deserializers, request
    handlers), keep one validation step and change it to return the tightened
-   type. Everything past the boundary should need no re-checking; if a
-   downstream guard survives, the type isn't tight yet.
+   type. Everything past the boundary should need no re-checking. If a
+   downstream guard remains, the type isn't tight yet
 7. Report what changed: each illegal state removed, the type reshaping that
    removed it, the guards and branches deleted, and how you verified valid
-   behavior held.
+   behavior held
 
 # Spotting illegal states
 
 - A boolean flag plus data meaningful only when the flag is set:
   `{ loading: boolean, data?: T, error?: E }` admits `loading` with `data`, or
-  `data` with `error`, states the UI never intends.
+  `data` with `error`, states the UI never holds
 - Multiple optional fields with a dependency between them: "if `endDate` is set,
-  `startDate` must be too", enforced only by a comment or a validator.
+  `startDate` must be too", enforced only by a comment or a validator
 - A string or number standing in for a closed set: a `status: string` that is
-  always one of four words, a `port: number` that must be 1 to 65535.
+  always one of four words, a `port: number` that must be 1 to 65535
 - Two collections that must stay in sync: parallel arrays, a map plus a list of
-  its keys, a count stored beside the items it counts.
+  its keys, a count stored beside the items it counts
 - A collection that must not be empty, guarded by
-  `if (items.length === 0) throw` at each use.
+  `if (items.length === 0) throw` at each use
 - The same validation repeated downstream of a boundary: every function
-  re-checks that the email is well-formed because the type `string` carries no
-  proof the first check ran.
+  re-checks that the email is well-formed because the type `string` provides no
+  proof the first check ran
 - A state machine encoded as independent booleans (`isConnecting`,
-  `isConnected`, `isClosed`) where most combinations are meaningless.
+  `isConnected`, `isClosed`) where most combinations are meaningless
 
 # Techniques
 
-- Sum types for mutually exclusive states: replace flag-plus-optional-fields
-  with a discriminated union, one variant per real state, each carrying only the
+- Sum types for mutually exclusive states: replace a flag plus optional fields
+  with a discriminated union, one variant per real state, each with only the
   fields that exist in that state.
-  `{ state: 'loading' } | { state: 'ok', data: T } | { state: 'error', error: E }`.
+  `{ state: 'loading' } | { state: 'ok', data: T } | { state: 'error', error: E }`
 - Closed sets for values typed as `string`: a union of literals or an enum
-  instead of `string`; the compiler now exhausts the cases `switch` used to
-  guard.
-- Types that carry proof of validation: a branded or wrapped type
-  (`ValidatedEmail`, `PositiveInt`) with its raw constructor private and a smart
-  constructor that checks once and returns the tightened type or an error.
-  Possession of the value is proof the check ran; no valid-looking-but-wrong
-  value can be built elsewhere.
-- Structures that make sync automatic: replace parallel arrays with one array of
-  pairs; derive the count from the collection instead of storing it; replace the
-  map-plus-key-list with the map alone.
+  instead of `string`. The compiler now exhausts the cases `switch` used to
+  guard
+- Types that prove validation ran: a branded or wrapped type (`ValidatedEmail`,
+  `PositiveInt`) with its raw constructor private and a smart constructor that
+  checks once and returns the tightened type or an error. Possession of the
+  value is proof the check ran. No other code can build a wrong value that looks
+  valid
+- Structures that stay in sync on their own: replace parallel arrays with one
+  array of pairs, derive the count from the collection instead of storing it,
+  and replace the map and its list of keys with the map alone
 - Non-empty by construction: a type that separates the first element from the
   rest (`{ head: T, rest: T[] }`) or a `NonEmptyArray` wrapper built only by a
-  checked factory, so "empty" cannot reach code that assumes otherwise.
-- Required-together fields grouped into one optional object: if `startDate` and
-  `endDate` come and go together, make one optional `range: { start, end }`
-  instead of two optional dates.
+  checked factory, so "empty" cannot reach code that assumes otherwise
+- Fields required together grouped into one optional object: if `startDate` and
+  `endDate` are always both present or both absent, make one optional
+  `range: { start, end }` instead of two optional dates
 
 These aren't exhaustive. Reason from first principles when none fits cleanly.
 
@@ -135,11 +135,10 @@ These aren't exhaustive. Reason from first principles when none fits cleanly.
   does pass through the "illegal" state, so it was a real state you missed. Add
   a variant for it rather than asserting the value into a variant it doesn't
   fit, or revert the tightening if the state is a short-lived intermediate not
-  worth modeling.
-- A valid state no longer round-trips (serialization, database rows, API
-  payloads changed shape): the representation is also used outside the code you
-  reshaped. Convert at the boundary between the stored shape and the tightened
-  type instead of changing the wire format, unless the user asks for a
-  migration.
+  worth modeling
+- A valid state no longer round-trips through serialization, database rows, or
+  API payloads: the representation is also used outside the code you reshaped.
+  Convert at the boundary between the stored shape and the tightened type
+  instead of changing the wire format, unless the user asks for a migration
 - The tightened type spread flags or type parameters through untouched code: the
-  churn test failed in practice. Revert and report it as a deliberate keep.
+  churn test failed in practice. Revert and report it as a deliberate keep

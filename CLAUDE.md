@@ -6,6 +6,13 @@
 
 - Run individual tests, not the whole test suite
 
+# Prose style
+
+Apply these rules to all prose you write, including documentation, comments,
+docstrings, commit messages, and chat responses.
+
+@skills/humanize/RULES.md
+
 # Comment style
 
 - NEVER explain what is evident from the code
