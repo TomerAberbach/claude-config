@@ -86,6 +86,11 @@ Other fields:
   then how-to and guideline sections the workflow references
 - Cross-reference related skills instead of duplicating them: "Before starting,
   load `/authoring-tests`". Verify the referenced skill exists
+- A project skill may only reference other project skills. A user skill is
+  stored in one person's `~/.claude/skills`, so a project skill pointing at one
+  sends every other contributor to a skill they lack. Either inline the skill's
+  instructions, or drop the reference. A user skill may reference either, since
+  whoever has it has both
 - NEVER instruct using interactive commands (e.g. `jj split -i`, `git add -p`).
   Claude cannot respond to interactive prompts, so use flag-driven alternatives
 - In a workflow that mutates state, verify after each step, define when to stop

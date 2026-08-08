@@ -7,14 +7,18 @@ description: |
 argument-hint: '[project directory to read, or a focus area]'
 allowed-tools:
   - Bash(sh *extract-prompts.sh *)
+  - Bash(sh *extract-actions.sh *)
   - Bash(sort *)
   - Bash(cut *)
   - Bash(wc *)
+  - Bash(awk *)
+  - Bash(uniq *)
+  - Bash(grep *)
 ---
 
-Read the project's transcripts for work the user does repeatedly, then propose a
-remedy for each pattern nothing already covers. Propose only. Build nothing
-unless the user picks it.
+Read the project's transcripts for work that repeats, both the work the user
+asks for and the work you do to satisfy it, then propose a remedy for each
+pattern nothing already covers. Build nothing unless the user picks it.
 
 Arguments: $ARGUMENTS
 
@@ -39,19 +43,25 @@ the artifact (a proposal list).
    request and marks how much it cut. For a pasted log or a plan, that is all
    you need. Say in the report that you truncated. When the project has no
    transcripts it exits with an error. Report that and stop
-2. Enumerate what already covers repetitive work here, before reading a single
+2. Run `extract-actions.sh` (in this skill's directory) with the same argument,
+   writing its output to a second file in the scratchpad directory. It prints
+   one line per tool call, from the main thread and from the subagents a session
+   spawned, with each tool's input reduced to a signature. Never read this file
+   whole. See "Reading the action extract"
+3. Enumerate what already covers repetitive work here, before reading a single
    prompt, so you judge candidates against a fixed list. See "Enumerating
    existing coverage"
-3. Read every extracted prompt. Call none irrelevant before you read it
-4. Cluster the prompts by what the user wanted, not by the words used. "Rewrite
+4. Read every extracted prompt. Call none irrelevant before you read it
+5. Cluster the prompts by what the user wanted, not by the words used. "Rewrite
    this so each function stays at one level" and "this reads bottom-up, fix it"
    are one task. For each cluster, keep every prompt in it, the sessions it
    spans, and two or three verbatim examples showing the range. See "What counts
    as repetitive work"
-5. Judge each cluster against the enumeration. See "Judging existing coverage"
-6. For each surviving candidate, choose the remedy. See "Choosing a remedy",
+6. Cluster the actions. See "Reading the action extract"
+7. Judge each cluster against the enumeration. See "Judging existing coverage"
+8. For each surviving candidate, choose the remedy. See "Choosing a remedy",
    then "Choosing a level" for the remedies that have one
-7. Report as in "Reporting". Offer to build the ones the user picks: run
+9. Report as in "Reporting". Offer to build the ones the user picks: run
    `/create-skill` for a skill, `/update-config` for a hook or a permission
    entry, and write a rule, script, or fix yourself
 
@@ -109,6 +119,114 @@ Other kinds of clusters worth keeping:
 
 These aren't exhaustive. Reason from first principles when none fits cleanly.
 
+# Reading the action extract
+
+A prompt cluster shows what the user asked for more than once. An action
+cluster shows what the same request cost: the commands re-derived, the files
+re-read, the calls that failed before they worked.
+
+`extract-actions.sh` prints one tab-separated line per tool call:
+
+| Column | Contents |
+| --- | --- |
+| 1 | project |
+| 2 | session id |
+| 3 | timestamp |
+| 4 | tool name |
+| 5 | signature: `Bash:jj diff`, `Edit:src/parse.py`, `Skill:humanize` |
+| 6 | `err` when the call returned an error, empty otherwise |
+| 7 | the skill that was running, empty when there was none |
+| 8 | the subagent id, empty on the main thread |
+| 9 | the input, truncated to 120 characters, or 900 for a subagent prompt |
+
+Calls made inside a subagent are included, under the session that spawned them,
+so session counts cover both. Column 8 separates them.
+
+The extract runs to thousands of lines, so read counts before lines. Run the
+queries below, read the top 30 rows of each, then read column 9 for the few
+signatures that pass the threshold. The commands assume the extract is at `$A`.
+
+Sessions spanned per signature. This is the primary table, because the
+threshold counts sessions:
+
+```sh
+cut -f2,5 "$A" | sort -u | cut -f2 | sort | uniq -c | sort -rn | head -30
+```
+
+Failures per signature. A command that errors in session after session
+indicates a broken default, a missing dependency, or a missing wrapper:
+
+```sh
+awk -F'\t' '$6 == "err"' "$A" | cut -f5 | sort | uniq -c | sort -rn | head -30
+```
+
+Files opened at the start of a session. A file read first in many sessions is
+context to add to `CLAUDE.md` or to a document `CLAUDE.md` links:
+
+```sh
+awk -F'\t' '$4 == "Read" { if (++n[$2] <= 5) print $5 "\t" $2 }' "$A" |
+  sort -u | cut -f1 | sort | uniq -c | sort -rn | head -30
+```
+
+Recurring sequences. Three signatures in a row, with consecutive repeats
+collapsed, counted once per session. A sequence that recurs across sessions is
+a procedure worth writing down:
+
+```sh
+awk -F'\t' '{ if ($2 != s) { s = $2; a = ""; b = ""; p = "" }
+              if ($5 == p) next
+              p = $5
+              if (a != "" && b != "") print a " > " b " > " $5 "\t" $2
+              a = b; b = $5 }' "$A" |
+  sort -u | cut -f1 | sort | uniq -c | sort -rn | head -30
+```
+
+Failures per skill. A skill whose calls fail is a skill to amend, and column 7
+contains it:
+
+```sh
+awk -F'\t' '$6 == "err" && $7 != ""' "$A" |
+  cut -f5,7 | sort | uniq -c | sort -rn | head -30
+```
+
+To read a cluster once counting has selected it, filter to its signature:
+
+```sh
+awk -F'\t' '$5 == "Bash:uv run pytest"' "$A" | cut -f2,6,7,9 | head -40
+```
+
+Thresholds match the prompt side: three or more occurrences spanning two or
+more sessions, with two occurrences borderline.
+
+Subagent invocations are the exception to counting. A project produces tens of
+them, not thousands, and each prompt states a task in full, so column 9 keeps
+the prompt itself up to 900 characters. Read every one:
+
+```sh
+awk -F'\t' '$4 == "Agent"' "$A" | cut -f2,5,9
+```
+
+Cluster these the way you cluster the user's prompts, by what was asked. A
+prompt written to a subagent three times across sessions is a strong skill
+candidate, because you wrote the procedure out and threw it away each time. The
+prompt is a first draft of the skill, and its repetitions show which parts
+stayed fixed and which varied. The fixed parts become the skill's body and the
+varying parts its arguments.
+
+Discard the patterns that dominate every table and indicate nothing on their
+own: search-then-substitute loops, and repeated Edits to one file. What counts
+is a signature tied to this project: its own scripts, its test commands, its
+files.
+
+Where an action cluster restates a prompt cluster, merge it into that one as
+evidence of the cost, and report it once. A cluster of failing `uv run ruff`
+calls next to prompts asking to fix formatting is one candidate, not two.
+
+An action cluster is weaker evidence than a prompt cluster, because the
+user chose the prompts and you chose the actions. A command run many times may
+be many tries at one badly specified job. Read column 7 before proposing
+anything, and say in the report which clusters rest on actions alone.
+
 # Judging existing coverage
 
 For each candidate, one of three verdicts:
@@ -141,6 +259,10 @@ Take the first that fits:
   work. `/fewer-permission-prompts` already does this. Name it and move on
 - **A skill**, when the task takes an ordered procedure with judgment calls
   worth writing down. Load `/create-skill` for the conventions
+- **An agent definition** in `.claude/agents/`, when the repetition is a prompt
+  written to a subagent: the same role, tools, and standing instructions each
+  time, with only the target varying. The varying part becomes the prompt, and
+  the rest becomes the definition
 
 One cluster can warrant two remedies, such as a script plus the skill that
 specifies when to run it. Say so rather than picking one.
@@ -165,11 +287,11 @@ passed as arguments, and say so.
 
 # Reporting
 
-Open with the scope: which project or projects, how many prompts, how many
-sessions, the date range, and how many existing skills, rules, hooks, and
-scripts you checked against.
+Open with the scope: which project or projects, how many prompts, how many tool
+calls, how many sessions, the date range, and how many existing skills, rules,
+hooks, and scripts you checked against.
 
-Then the proposals, most prompts first, each as:
+Then the proposals from the prompts, most prompts first, each as:
 
 - The work, in one imperative line, and its counts:
   `N prompts across M sessions`
@@ -180,8 +302,21 @@ Then the proposals, most prompts first, each as:
 - Level: user or project, with the reason in a clause, or where the script or
   fix goes
 
+Then, under a heading of its own, the proposals that rest on actions alone. The
+user never asked for these, so each one opens with the evidence:
+
+- The signature or sequence, and its counts:
+  `N calls across M sessions`, plus `K failed` where any did
+- Two or three lines from column 9, quoted
+- What the pattern indicates, in one line: the missing context, the missing
+  wrapper, the step that failed
+- Coverage, remedy, and level, as above
+
 Then the borderline list, one line each. Close with:
 
 - Candidates dropped as covered, one line each with what covers them
-- What the sample misses: prompts you could not classify, and other projects'
-  transcripts you did not read
+- Action clusters merged into a prompt proposal, one line each
+- What the sample misses: prompts you could not classify, tool calls whose
+  signature was too coarse to cluster, the prompts written to subagents, which
+  the prompt extract excludes because the user did not write them, and other
+  projects' transcripts you did not read

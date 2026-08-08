@@ -7,7 +7,8 @@
   "respectGitignore": false,
   "attribution": {
     "commit": "",
-    "pr": ""
+    "pr": "",
+    "sessionUrl": false
   },
   "includeGitInstructions": false,
   "permissions": {
@@ -50,6 +51,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "fable[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "PostToolUse": [
