@@ -12,14 +12,14 @@ $ARGUMENTS
 # Goals
 
 - Reduce the minified and gzipped/brotli minified size
-- NEVER reduce minified size at the expense of gzipped/brotli minified size
-- ALWAYS preserve the public API
+- Don't reduce minified size at the expense of gzipped/brotli minified size
+- Preserve the public API
 - Focus on large structural changes instead of small savings
 
 # Workflow
 
 1. Read and understand the library structure
-2. Run relevant tests and note which ones already fail. Do NOT fix them
+2. Run relevant tests and note which ones already fail. Leave them failing
 3. Measure size
 4. Optimize
 5. Rebuild

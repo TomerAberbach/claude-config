@@ -27,8 +27,8 @@ Arguments: $ARGUMENTS
      procedures, scripts, or conventions
 3. Decide the invocation model (see "Frontmatter")
 4. Read the one or two existing skills closest in shape to the new one and
-   mirror their structure and tone. Mirror the body, not the frontmatter:
-   frontmatter follows the rules below, whatever an older skill does
+   mirror their structure and tone. Mirror the body. Frontmatter follows the
+   rules below
 5. Draft the skill (see "Frontmatter" and "Body")
 6. Derive `allowed-tools` (see "Permissions")
 7. Write the skill file and summarize the choices made (location, invocation
@@ -47,7 +47,7 @@ Pick exactly one invocation model:
 - Auto-loaded guidance (e.g. `authoring-tests`): set `user-invocable: false`
   plus `paths` globs so the skill loads when matching files are touched.
   Description starts with "Use when..."
-- Model-invoked task: no flags. The description is the ONLY context Claude has
+- Model-invoked task: no flags. The description is the only context Claude has
   when deciding whether to load the skill, so it must state the trigger: "Use
   when asked to..." with concrete phrasings
 
@@ -63,10 +63,9 @@ Other fields:
   `<...>` for required ones. Always quote it: an unquoted `[...]` parses as a
   list
 - `arguments`: declare named arguments, referenced as `$<name>` in the body. Use
-  named arguments ONLY when the skill is always invoked with one specific value
-  and has no conversation fallback. No current skill needs them. Otherwise omit
-  them and use `$ARGUMENTS` for free-form input that can also fall back to the
-  conversation
+  named arguments only when the skill is always invoked with one specific value
+  and has no conversation fallback. Otherwise omit them and use `$ARGUMENTS` for
+  free-form input that can also fall back to the conversation
 
 # Body
 
@@ -75,13 +74,13 @@ Other fields:
   invocation time (e.g. `jj show --git` in `jj-split`). Use them for context the
   skill always needs. If the workflow might stop before using the context,
   gather it in a workflow step instead
-- A user-invoked skill (`disable-model-invocation: true`) MUST interpolate its
-  arguments in the body, either `$ARGUMENTS` for free-form input or the named
-  `$<name>` placeholders, so input passed to the slash command isn't dropped.
-  Place it after the dynamic context and before the workflow so user input can
-  override the defaults. When later prose refers back to the input, label the
-  line `Arguments: $ARGUMENTS` and write "the arguments" thereafter, so a long
-  input isn't repeated. Otherwise a bare `$ARGUMENTS` is fine
+- A user-invoked skill interpolates its arguments in the body, either
+  `$ARGUMENTS` for free-form input or the named `$<name>` placeholders, so input
+  passed to the slash command isn't dropped. Place it after the dynamic context
+  and before the workflow so user input can override the defaults. When later
+  prose refers back to the input, label the line `Arguments: $ARGUMENTS` and
+  write "the arguments" thereafter, so a long input isn't repeated. Otherwise a
+  bare `$ARGUMENTS` is fine
 - Structure: optional `# Goals` or `# Principles`, then a numbered `# Workflow`,
   then how-to and guideline sections the workflow references
 - Cross-reference related skills instead of duplicating them: "Before starting,
@@ -91,7 +90,7 @@ Other fields:
   sends every other contributor to a skill they lack. Either inline the skill's
   instructions, or drop the reference. A user skill may reference either, since
   whoever has it has both
-- NEVER instruct using interactive commands (e.g. `jj split -i`, `git add -p`).
+- Don't instruct using interactive commands (e.g. `jj split -i`, `git add -p`).
   Claude cannot respond to interactive prompts, so use flag-driven alternatives
 - In a workflow that mutates state, verify after each step, define when to stop
   early (e.g. "if the commit is already small, tell the user and stop"), and

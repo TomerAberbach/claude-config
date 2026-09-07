@@ -50,5 +50,5 @@ for and stop.
    2. Flag to the user if the tests caught a bug. Describe the behavior, the
       failing test, and your hypothesis about why it's a bug. Ask how to
       proceed. Go back to step 7 after making updates
-8. Run tests with coverage if possible. If new logic is not covered, go back to
-   step 5
+8. If the project has a coverage command, run it. If new logic is not covered,
+   go back to step 5

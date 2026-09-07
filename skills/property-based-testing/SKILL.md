@@ -25,7 +25,7 @@ Follow these principles when writing property-based tests:
   Asserting the full value is often infeasible. If no assertion seems feasible,
   then the input space is too broad
 
-- NEVER constrain an arbitrary unless the constraint is necessary to satisfy the
+- Don't constrain an arbitrary unless the constraint is necessary to satisfy the
   property or to resolve a performance problem
 
 # Common properties

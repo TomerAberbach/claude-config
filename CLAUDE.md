@@ -15,10 +15,10 @@ docstrings, commit messages, and chat responses.
 
 # Comment style
 
-- NEVER explain what is evident from the code
-- NEVER reference specific callers or usages of a function, class, or module;
+- Don't explain what is evident from the code
+- Don't reference specific callers or usages of a function, class, or module;
   just describe the behavior
-- NEVER leave breadcrumbs or tombstones
+- Don't leave breadcrumbs or tombstones
 
 ## JavaScript/TypeScript
 
@@ -31,8 +31,7 @@ docstrings, commit messages, and chat responses.
 ### Workflow
 
 - Use `node --input-type=module << 'EOF' ... EOF` to test hypotheses about JS/TS
-  code; on a `SyntaxError`, check you're using the right default or named
-  export. Prefer `Bash` for everything else
+  code. Prefer `Bash` for everything else
 
 ### Code style
 

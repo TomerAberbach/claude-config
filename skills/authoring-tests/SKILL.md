@@ -35,12 +35,12 @@ Adhere to these principles when writing tests:
 - Test the public API only, not implementation details
 
 - Prefer real implementations and test doubles over mocks. Reserve mocks for I/O
-  boundaries and third-party services. If you must use mocks, then ONLY mock
+  boundaries and third-party services. If you must use mocks, then mock only
   public APIs
 
 - Extract well-named variables to split up and clarify complex test data
 
-- Use helper functions to remove redundant details from the test body. NEVER
+- Use helper functions to remove redundant details from the test body. Don't
   hide details relevant to the test in helper functions. Pass the relevant data
   into the helper function from the test instead
 

@@ -121,23 +121,23 @@ These aren't exhaustive. Reason from first principles when none fits cleanly.
 
 # Reading the action extract
 
-A prompt cluster shows what the user asked for more than once. An action
-cluster shows what the same request cost: the commands re-derived, the files
-re-read, the calls that failed before they worked.
+A prompt cluster shows what the user asked for more than once. An action cluster
+shows what the same request cost: the commands re-derived, the files re-read,
+the calls that failed before they worked.
 
 `extract-actions.sh` prints one tab-separated line per tool call:
 
-| Column | Contents |
-| --- | --- |
-| 1 | project |
-| 2 | session id |
-| 3 | timestamp |
-| 4 | tool name |
-| 5 | signature: `Bash:jj diff`, `Edit:src/parse.py`, `Skill:humanize` |
-| 6 | `err` when the call returned an error, empty otherwise |
-| 7 | the skill that was running, empty when there was none |
-| 8 | the subagent id, empty on the main thread |
-| 9 | the input, truncated to 120 characters, or 900 for a subagent prompt |
+| Column | Contents                                                             |
+| ------ | -------------------------------------------------------------------- |
+| 1      | project                                                              |
+| 2      | session id                                                           |
+| 3      | timestamp                                                            |
+| 4      | tool name                                                            |
+| 5      | signature: `Bash:jj diff`, `Edit:src/parse.py`, `Skill:humanize`     |
+| 6      | `err` when the call returned an error, empty otherwise               |
+| 7      | the skill that was running, empty when there was none                |
+| 8      | the subagent id, empty on the main thread                            |
+| 9      | the input, truncated to 120 characters, or 900 for a subagent prompt |
 
 Calls made inside a subagent are included, under the session that spawned them,
 so session counts cover both. Column 8 separates them.
@@ -146,15 +146,15 @@ The extract runs to thousands of lines, so read counts before lines. Run the
 queries below, read the top 30 rows of each, then read column 9 for the few
 signatures that pass the threshold. The commands assume the extract is at `$A`.
 
-Sessions spanned per signature. This is the primary table, because the
-threshold counts sessions:
+Sessions spanned per signature. This is the primary table, because the threshold
+counts sessions:
 
 ```sh
 cut -f2,5 "$A" | sort -u | cut -f2 | sort | uniq -c | sort -rn | head -30
 ```
 
-Failures per signature. A command that errors in session after session
-indicates a broken default, a missing dependency, or a missing wrapper:
+Failures per signature. A command that errors in session after session indicates
+a broken default, a missing dependency, or a missing wrapper:
 
 ```sh
 awk -F'\t' '$6 == "err"' "$A" | cut -f5 | sort | uniq -c | sort -rn | head -30
@@ -169,8 +169,8 @@ awk -F'\t' '$4 == "Read" { if (++n[$2] <= 5) print $5 "\t" $2 }' "$A" |
 ```
 
 Recurring sequences. Three signatures in a row, with consecutive repeats
-collapsed, counted once per session. A sequence that recurs across sessions is
-a procedure worth writing down:
+collapsed, counted once per session. A sequence that recurs across sessions is a
+procedure worth writing down:
 
 ```sh
 awk -F'\t' '{ if ($2 != s) { s = $2; a = ""; b = ""; p = "" }
@@ -195,8 +195,8 @@ To read a cluster once counting has selected it, filter to its signature:
 awk -F'\t' '$5 == "Bash:uv run pytest"' "$A" | cut -f2,6,7,9 | head -40
 ```
 
-Thresholds match the prompt side: three or more occurrences spanning two or
-more sessions, with two occurrences borderline.
+Thresholds match the prompt side: three or more occurrences spanning two or more
+sessions, with two occurrences borderline.
 
 Subagent invocations are the exception to counting. A project produces tens of
 them, not thousands, and each prompt states a task in full, so column 9 keeps
@@ -222,10 +222,10 @@ Where an action cluster restates a prompt cluster, merge it into that one as
 evidence of the cost, and report it once. A cluster of failing `uv run ruff`
 calls next to prompts asking to fix formatting is one candidate, not two.
 
-An action cluster is weaker evidence than a prompt cluster, because the
-user chose the prompts and you chose the actions. A command run many times may
-be many tries at one badly specified job. Read column 7 before proposing
-anything, and say in the report which clusters rest on actions alone.
+An action cluster is weaker evidence than a prompt cluster, because the user
+chose the prompts and you chose the actions. A command run many times may be
+many tries at one badly specified job. Read column 7 before proposing anything,
+and say in the report which clusters rest on actions alone.
 
 # Judging existing coverage
 
@@ -305,8 +305,8 @@ Then the proposals from the prompts, most prompts first, each as:
 Then, under a heading of its own, the proposals that rest on actions alone. The
 user never asked for these, so each one opens with the evidence:
 
-- The signature or sequence, and its counts:
-  `N calls across M sessions`, plus `K failed` where any did
+- The signature or sequence, and its counts: `N calls across M sessions`, plus
+  `K failed` where any did
 - Two or three lines from column 9, quoted
 - What the pattern indicates, in one line: the missing context, the missing
   wrapper, the step that failed
