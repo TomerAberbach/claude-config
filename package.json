@@ -5,8 +5,8 @@
   },
   "prettier": "@tomer/prettier-config",
   "devDependencies": {
-    "@tomer/prettier-config": "^4.0.0",
-    "prettier": "^3.8.1",
+    "@tomer/prettier-config": "^4.0.1",
+    "prettier": "^3.9.6",
     "yaml": "^2.9.0"
   }
 }
