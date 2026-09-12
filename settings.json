@@ -51,7 +51,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "PostToolUse": [
