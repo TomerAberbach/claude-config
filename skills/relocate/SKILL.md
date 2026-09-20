@@ -104,8 +104,8 @@ A unit can be in the right file yet at the wrong level of abstraction. That is
   home needs comes after, as its own step
 - Update every reference in the same step. Search the repo for the old path and
   the old name, including tests, mocks, barrel files, config, and docs. Leave no
-  re-export shim behind, except for a published API whose consumers you can't
-  edit. Say so in the report when you leave one
+  re-export behind. When the moved unit is part of the public API, move it
+  anyway and flag the changed import path in the report
 - Keep names unless the new home makes part of the name redundant:
   `formatOrderDate` moving into `orders/` becomes `formatDate`. A name that
   still reads well where it landed stays

@@ -46,12 +46,12 @@ commit has no changes, ask the user what to refactor and stop.
   one place fails. A file of one-line helpers, each called once, is its own
   readability failure. A unit that already reads as a single-altitude narrative
   is done, however long
-- Preserve behavior and the public API. This is refactoring: a pure move,
+- Preserve behavior and public signatures. This is refactoring: a pure move,
   rename, and regroup, not redesign and not bug-fixing. If you find a bug while
-  mapping altitudes, report it. Don't silently fix it. Never change what callers
-  outside the target see: keep extracted collaborators private behind the
-  original methods, and re-export a new module from the original one so
-  importers don't move
+  mapping altitudes, report it. Don't silently fix it. Keep extracted
+  collaborators private behind the original methods. When a public export moves
+  to a new module, update every importer instead of re-exporting it from the
+  original, and flag the changed import path in the report
 
 These principles double as the test for an extraction: make a cut only when it
 clears them all. They aren't exhaustive, so reason from first principles when
@@ -104,9 +104,9 @@ none fits cleanly.
   helper named for what it accomplishes. From a class, gather the low-altitude
   methods and the state they use into a private collaborator the class delegates
   to, keeping the class's public methods unchanged. From a module, move the
-  lower-layer code into its own module that the original imports, and re-export
-  anything that was public so importers don't move. In each case the original
-  site becomes one named step among its peers
+  lower-layer code into its own module that the original imports, and update the
+  importers of anything that moved. In each case the original site becomes one
+  named step among its peers
 - Pass only what the chunk needs and return only what the caller uses. Don't
   reach through shared mutable state to fake a clean boundary
 - Place the helper near its caller and below it, following the file's existing

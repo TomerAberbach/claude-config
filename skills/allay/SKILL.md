@@ -102,7 +102,7 @@ These aren't exhaustive. Reason from first principles when none fits cleanly.
   layer, so its neighbors don't explain it. Handoff: `/relocate`
 - Wrong or unsettled name. The code says one thing and does another, or one
   concept goes by three names. Handoff: `/rename-concept` for a single term,
-  `/ubiquitize-language` when the vocabulary itself is unsettled, `/concretize`
+  `/reconcile-language` when the vocabulary itself is unsettled, `/concretize`
   when the name is jargon or an imported metaphor
 - Speculative generality. Parameters, hooks, and indirection that exist for a
   caller that doesn't exist. Symptom: every call site passes the same value.

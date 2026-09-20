@@ -66,7 +66,7 @@ The artifact determines what step 5 keeps:
 - **Schema or type**: keep the fields that are always present, always absent, or
   meaningfully optional, and the values each admits. Load `/outlaw-states` to
   keep the illegal shapes unrepresentable
-- **Glossary**: load `/ubiquitize-language`, which already does this
+- **Glossary**: load `/reconcile-language`, which already does this
 - **Reference table or checklist**: keep one row per item and one column per
   question the consumer asks, and nothing else
 

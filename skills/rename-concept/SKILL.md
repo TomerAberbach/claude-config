@@ -64,9 +64,9 @@ These aren't exhaustive. Reason from first principles when none fits cleanly.
    or a place the letters mean something else. Note those in the report
 7. Run the covering tests and a typecheck if any code changed
 8. Report: the old term, the new name and why it won, counts by category (code
-   identifiers, comments, prose, docs, glossary, skills, filenames), any public
-   name deliberately kept, and any occurrence left alone because the letters
-   meant something else
+   identifiers, comments, prose, docs, glossary, skills, filenames), any renamed
+   name that is part of the public API, and any occurrence left alone because
+   the letters meant something else
 
 # Finding every occurrence
 
@@ -107,8 +107,8 @@ recommendation and why.
 # Applying the rename
 
 - Code identifiers: treat each as a behavior-preserving rename and update every
-  reference. For a name callers outside the project depend on, keep the old name
-  as an alias and say so in the report rather than breaking them silently
+  reference. Leave no alias for the old name. When the name is part of the
+  public API, rename it anyway and flag it in the report
 - Comments and prose: rewrite the sentence, don't substitute the word. The old
   name shaped the phrasing around it, and a swap leaves an awkward or now-wrong
   sentence
@@ -116,7 +116,7 @@ recommendation and why.
   path reference
 - `glossary.md`: update the entry to the new term and list the old term under
   aliases to avoid. If there is no glossary and the project would benefit,
-  suggest `/ubiquitize-language` rather than starting one mid-rename
+  suggest `/reconcile-language` rather than starting one mid-rename
 - `.claude/skills` and `CLAUDE.md`: future sessions read these. Renaming
   everywhere else and leaving them stale reintroduces the old word
 - Strings users see (CLI help, errors, docs): rename them, and call them out

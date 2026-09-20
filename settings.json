@@ -100,6 +100,8 @@
     "type": "command",
     "command": "bash /Users/tomer/.claude/statusline-command.sh"
   },
+  "enabledPlugins": {},
+  "extraKnownMarketplaces": {},
   "spinnerTipsEnabled": false,
   "spinnerVerbs": {
     "mode": "replace",

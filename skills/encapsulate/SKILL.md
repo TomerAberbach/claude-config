@@ -106,7 +106,7 @@ principles when none fits cleanly.
 - Names in the interface drawn from the implementation (`cacheEntry`, `rowId`,
   `retryBuffer`) rather than the domain. When the guarantee is hard to name in
   the caller's words, the boundary is in the wrong place. Load
-  `/ubiquitize-language` when the domain vocabulary itself is unsettled
+  `/reconcile-language` when the domain vocabulary itself is unsettled
 - Exports used by no caller, or by exactly one caller that immediately wraps
   them. Either the interface is wider than the guarantee or the module has the
   wrong owner
@@ -139,8 +139,9 @@ These aren't exhaustive. Reason from first principles when none fits cleanly.
   two that always change together. Load `/stratify` when the parts sit at
   different levels of abstraction, and `/reuse` when closing a leak reveals the
   same logic in two places
-- Keep the change contained. Preserve the old names where they still fit, and
-  re-export anything that moves so importers don't have to change
+- Keep the change contained. Preserve the old names where they still fit. When
+  something moves or is renamed, update its importers and leave no alias or
+  re-export. Flag each change to the public API in the report
 
 # Fixing mistakes
 

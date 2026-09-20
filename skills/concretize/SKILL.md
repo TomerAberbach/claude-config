@@ -95,7 +95,7 @@ from first principles when none fits cleanly.
   would lose real meaning, keep it. Note why in your report
 - Terms of art the project already uses consistently, even if you'd pick
   different words. Concretizing should not fork the project's vocabulary. If a
-  whole vocabulary needs aligning, use `/ubiquitize-language`
+  whole vocabulary needs aligning, use `/reconcile-language`
 - Anything you don't fully understand. Investigate or leave it. Don't guess a
   word away and lose its meaning
 

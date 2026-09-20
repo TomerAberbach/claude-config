@@ -14,7 +14,13 @@
 !hooks/**
 !skills
 !skills/**
+skills/synced/
 !CLAUDE.md
 !settings.json
 !statusline-command.sh
 !file-suggestion.sh
+
+!.claude
+!.claude/settings.json
+!.claude/hooks
+!.claude/hooks/**

@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "format": "prettier --cache --write ."
+    "format:base": "prettier --cache --write",
+    "format": "pnpm format:base ."
   },
   "prettier": "@tomer/prettier-config",
   "devDependencies": {

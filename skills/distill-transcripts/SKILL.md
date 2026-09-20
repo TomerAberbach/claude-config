@@ -142,69 +142,34 @@ the calls that failed before they worked.
 Calls made inside a subagent are included, under the session that spawned them,
 so session counts cover both. Column 8 separates them.
 
-The extract runs to thousands of lines, so read counts before lines. Run the
-queries below, read the top 30 rows of each, then read column 9 for the few
-signatures that pass the threshold. The commands assume the extract is at `$A`.
+The extract runs to thousands of lines, so read counts before lines. Run each
+query below with `query-actions.sh` (in this skill's directory), passing the
+query name and the extract file. Read the top 30 rows each prints, then read
+column 9 for the few signatures that pass the threshold.
 
-Sessions spanned per signature. This is the primary table, because the threshold
-counts sessions:
+- `sessions`: sessions spanned per signature. This is the primary table, because
+  the threshold counts sessions
+- `failures`: failures per signature. A command that errors in session after
+  session indicates a broken default, a missing dependency, or a missing wrapper
+- `first-reads`: files opened at the start of a session. A file read first in
+  many sessions is context to add to `CLAUDE.md` or to a document `CLAUDE.md`
+  links
+- `sequences`: three signatures in a row, with consecutive repeats collapsed,
+  counted once per session. A sequence that recurs across sessions is a
+  procedure worth writing down
+- `skill-failures`: failures per signature and running skill. A skill whose
+  calls fail is a skill to amend
 
-```sh
-cut -f2,5 "$A" | sort -u | cut -f2 | sort | uniq -c | sort -rn | head -30
-```
-
-Failures per signature. A command that errors in session after session indicates
-a broken default, a missing dependency, or a missing wrapper:
-
-```sh
-awk -F'\t' '$6 == "err"' "$A" | cut -f5 | sort | uniq -c | sort -rn | head -30
-```
-
-Files opened at the start of a session. A file read first in many sessions is
-context to add to `CLAUDE.md` or to a document `CLAUDE.md` links:
-
-```sh
-awk -F'\t' '$4 == "Read" { if (++n[$2] <= 5) print $5 "\t" $2 }' "$A" |
-  sort -u | cut -f1 | sort | uniq -c | sort -rn | head -30
-```
-
-Recurring sequences. Three signatures in a row, with consecutive repeats
-collapsed, counted once per session. A sequence that recurs across sessions is a
-procedure worth writing down:
-
-```sh
-awk -F'\t' '{ if ($2 != s) { s = $2; a = ""; b = ""; p = "" }
-              if ($5 == p) next
-              p = $5
-              if (a != "" && b != "") print a " > " b " > " $5 "\t" $2
-              a = b; b = $5 }' "$A" |
-  sort -u | cut -f1 | sort | uniq -c | sort -rn | head -30
-```
-
-Failures per skill. A skill whose calls fail is a skill to amend, and column 7
-contains it:
-
-```sh
-awk -F'\t' '$6 == "err" && $7 != ""' "$A" |
-  cut -f5,7 | sort | uniq -c | sort -rn | head -30
-```
-
-To read a cluster once counting has selected it, filter to its signature:
-
-```sh
-awk -F'\t' '$5 == "Bash:uv run pytest"' "$A" | cut -f2,6,7,9 | head -40
-```
+To read a cluster once counting has selected it, pass `signature` and the
+signature as a third argument, such as `'Bash:uv run pytest'`. Pipe it through
+`head -40`.
 
 Thresholds match the prompt side: three or more occurrences spanning two or more
 sessions, with two occurrences borderline.
 
 Subagent invocations are the exception to counting. A project produces tens of
 them, not thousands, and each prompt states a task in full, so column 9 keeps
-the prompt itself up to 900 characters. Read every one:
-
-```sh
-awk -F'\t' '$4 == "Agent"' "$A" | cut -f2,5,9
-```
+the prompt itself up to 900 characters. Read every one, with the `agents` query.
 
 Cluster these the way you cluster the user's prompts, by what was asked. A
 prompt written to a subagent three times across sessions is a strong skill

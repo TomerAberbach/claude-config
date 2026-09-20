@@ -77,7 +77,7 @@ These aren't exhaustive. Reason from first principles when none fits cleanly.
 - Follow the form the user prescribed even when it is the minority, and report
   the scale of the resulting change
 - If the best form needs vocabulary the project doesn't use consistently, stop
-  and suggest `/ubiquitize-language` instead of splitting the project's
+  and suggest `/reconcile-language` instead of splitting the project's
   vocabulary further
 
 # Fixing mistakes

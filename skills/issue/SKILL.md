@@ -53,10 +53,13 @@ Pick one from the arguments:
    `gh issue view <n> --comments`
 2. Run `show-repo-issues.sh` (in this skill's directory) with the repo and the
    keywords of the symptom: `show-repo-issues.sh <owner/repo> <keyword>...`. It
-   prints the issue templates, the labels, the recent issues with their labels,
-   and a duplicate search per keyword with pull requests included. A template's
-   sections state what the maintainer needs, so follow it. The recent issues
-   show the project's tone and which labels it uses
+   prints the contributing, security, and support guidelines, the issue
+   templates, the labels, the recent issues with their labels, and a duplicate
+   search per keyword with pull requests included. The guidelines and the
+   templates state what the maintainer needs, so follow them. If the guidelines
+   require filing the report elsewhere, such as a discussion, a private security
+   advisory, or a support forum, tell the user and stop. The recent issues show
+   the project's tone and which labels it uses
 3. Link the closest match the search found. If it is the same bug, say so and
    stop. The search covers open and closed issues, so don't add a `--state` flag
    to a search of your own
