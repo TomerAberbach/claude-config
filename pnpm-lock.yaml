@@ -9,25 +9,25 @@ importers:
   .:
     devDependencies:
       '@tomer/prettier-config':
-        specifier: ^4.0.1
-        version: 4.0.1(prettier@3.9.6)
+        specifier: ^5.0.0
+        version: 5.0.0(prettier@3.9.10)
       prettier:
-        specifier: ^3.9.6
-        version: 3.9.6
+        specifier: ^3.9.10
+        version: 3.9.10
       yaml:
-        specifier: ^2.9.0
-        version: 2.9.0
+        specifier: ^2.9.1
+        version: 2.9.1
 
 packages:
 
-  '@tomer/prettier-config@4.0.1':
-    resolution: {integrity: sha512-DPVDxsTfoLJJhsdNV6ODQzyVqd0fKtZyu7KWWnApf+Y57fCsw8YasiwUkwltJb16pn1fw4IU5urTvCYaUoZUwQ==}
+  '@tomer/prettier-config@5.0.0':
+    resolution: {integrity: sha512-g023zz4WRU6KopIuKIyi+bXHxirwEObQuZYQuLALPKtDa5ez1omImEgPBH6g631o6uIp79c3hsjwsVYfXK20hg==}
     engines: {node: '>= 22'}
     peerDependencies:
-      prettier: ^3
+      prettier: ^3.7
 
-  prettier-plugin-tailwindcss@0.7.4:
-    resolution: {integrity: sha512-UKii4RjY05SNt/WQi6/NcOn/LsT0/ILLXsxygjbRg5/YZelsSu5jTqorYHPDGq4nZy5q5hpCu+XdGZ1xaJEQgw==}
+  prettier-plugin-tailwindcss@0.8.1:
+    resolution: {integrity: sha512-iaFMYqDsE4ffdDkn5qup0j5f2aCEBFZrdrZnvu9QKTlWx/iGPeQ4HHu7b7fCPMxeo9nwQBiOAh2nSypdFYWJkw==}
     engines: {node: '>=20.19'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -81,22 +81,22 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.9.6:
-    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
+  prettier@3.9.10:
+    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
     engines: {node: '>=14'}
     hasBin: true
 
-  yaml@2.9.0:
-    resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==}
+  yaml@2.9.1:
+    resolution: {integrity: sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==}
     engines: {node: '>= 14.6'}
     hasBin: true
 
 snapshots:
 
-  '@tomer/prettier-config@4.0.1(prettier@3.9.6)':
+  '@tomer/prettier-config@5.0.0(prettier@3.9.10)':
     dependencies:
-      prettier: 3.9.6
-      prettier-plugin-tailwindcss: 0.7.4(prettier@3.9.6)
+      prettier: 3.9.10
+      prettier-plugin-tailwindcss: 0.8.1(prettier@3.9.10)
     transitivePeerDependencies:
       - '@ianvs/prettier-plugin-sort-imports'
       - '@prettier/plugin-hermes'
@@ -115,10 +115,10 @@ snapshots:
       - prettier-plugin-sort-imports
       - prettier-plugin-svelte
 
-  prettier-plugin-tailwindcss@0.7.4(prettier@3.9.6):
+  prettier-plugin-tailwindcss@0.8.1(prettier@3.9.10):
     dependencies:
-      prettier: 3.9.6
+      prettier: 3.9.10
 
-  prettier@3.9.6: {}
+  prettier@3.9.10: {}
 
-  yaml@2.9.0: {}
+  yaml@2.9.1: {}

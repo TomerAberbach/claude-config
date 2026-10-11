@@ -76,8 +76,8 @@ Arguments: $ARGUMENTS
    previous commits to these files followed
 4. Work out why the change was made. Read the surrounding code when the diff
    alone doesn't explain it. Prefer the arguments over your own inference
-5. Set the description with `jj describe -m '<summary>' -m '<body>'`, passing
-   a second `-m` only for a body. Each `-m` becomes its own paragraph
+5. Set the description with `jj describe -m '<summary>' -m '<body>'`, passing a
+   second `-m` only for a body. Each `-m` becomes its own paragraph
 6. Show the result with `jj log -r @ --no-graph -T 'description'`
 
 # Fixing mistakes
