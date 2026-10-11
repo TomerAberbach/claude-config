@@ -9,7 +9,6 @@ allowed-tools:
   - Bash(jj log *)
   - Bash(jj op log *)
   - Bash(jj undo *)
-  - Agent
 ---
 
 Write a description for the current `jj` commit.
@@ -77,14 +76,9 @@ Arguments: $ARGUMENTS
    previous commits to these files followed
 4. Work out why the change was made. Read the surrounding code when the diff
    alone doesn't explain it. Prefer the arguments over your own inference
-5. Run `/humanize` on the planned description in a subagent, passing the text
-   inline and asking for the revision back. Give the subagent nothing else, so
-   it reads the draft cold
-6. Take the revision, restoring anything it dropped and rewriting a summary line
-   it pushed past 72 characters. Set the description with
-   `jj describe -m '<summary>' -m '<body>'`, passing a second `-m` only for a
-   body. Each `-m` becomes its own paragraph
-7. Show the result with `jj log -r @ --no-graph -T 'description'`
+5. Set the description with `jj describe -m '<summary>' -m '<body>'`, passing
+   a second `-m` only for a body. Each `-m` becomes its own paragraph
+6. Show the result with `jj log -r @ --no-graph -T 'description'`
 
 # Fixing mistakes
 

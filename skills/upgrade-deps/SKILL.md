@@ -26,7 +26,7 @@ its latest version and why.
 # Project state
 
 ```!
-ls package.json pnpm-lock.yaml pnpm-workspace.yaml package-lock.json yarn.lock Cargo.toml pyproject.toml uv.lock go.mod 2>/dev/null | head -20
+ls -d package.json pnpm-lock.yaml pnpm-workspace.yaml package-lock.json yarn.lock Cargo.toml pyproject.toml uv.lock go.mod .github/workflows 2>/dev/null | head -20
 ```
 
 ```!
@@ -41,9 +41,11 @@ them. Any other guidance in the arguments overrides the defaults below.
 # Operations
 
 The workflow refers to package manager operations by name. The files above
-identify the package manager, and `package-managers.md` maps each operation to
-that manager's command or config, along with its workspace flags, range syntax,
-and override syntax. Read it before step 1.
+identify the package managers, and `package-managers.md` maps each operation to
+each manager's command or config, along with its workspace flags, range syntax,
+and override syntax. GitHub Actions pins in `.github/workflows` count as one
+more manager. Read the file before step 1, and run steps 2 to 5 for every
+manager the project uses.
 
 - Frozen install: install exactly what the lockfile records
 - List outdated: each dependency's current, wanted, and latest versions
@@ -108,6 +110,11 @@ dependency changed behavior the test relied on or the test asserted an
 implementation detail, then change the project's code in the first case and the
 test in the second. Don't loosen or pin the dependency's range as a fix. If you
 find no fix, hold the dependency back as in step 4.4.
+
+A GitHub Actions upgrade runs only in CI, so the local checks never exercise it.
+Verify it against the new version's `action.yml` as `package-managers.md`
+describes, and tell the user in the report that the next CI run is the real
+test.
 
 # Reasons to hold back
 

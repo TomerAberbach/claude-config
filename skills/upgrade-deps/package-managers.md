@@ -1,9 +1,9 @@
 # Package manager operations
 
 `SKILL.md` names each operation. This file gives the command or config for it
-per package manager. An operation marked "none" has no equivalent, so do that
-step by hand: edit the manifest and reinstall. Commands outside the pnpm set are
-not in the skill's `allowed-tools`, so each one prompts for permission.
+per package manager. An operation marked "none" has no equivalent, so skip the
+step that uses it for that manager. Commands outside the pnpm set are not in the
+skill's `allowed-tools`, so each one prompts for permission.
 
 ## Detection
 
@@ -15,6 +15,7 @@ not in the skill's `allowed-tools`, so each one prompts for permission.
 | `Cargo.toml`                    | cargo   |
 | `pyproject.toml` with `uv.lock` | uv      |
 | `go.mod`                        | go      |
+| `.github/workflows`             | actions |
 
 ## pnpm
 
@@ -104,3 +105,45 @@ not in the skill's `allowed-tools`, so each one prompts for permission.
   itself
 - Override: `replace` directive in `go.mod`. Cannot scope to a range
 - Dedupe: `go mod tidy`
+
+## actions
+
+GitHub Actions has no manager or lockfile. Every
+`uses: <owner>/<repo>[/<path>]@<ref>` line in `.github/workflows/*.yml` and in
+local composite actions (`action.yml`) is a dependency. Skip `uses:` lines that
+start with `./` or `docker://`. A pin takes one of three styles, and an upgrade
+keeps the style it found:
+
+- Major tag: `@v4`. Floats within the major, so only a new major is an upgrade
+- Exact tag: `@v4.2.1`
+- Commit SHA: `@<40-char sha> # v4.2.1`. The comment records the tag. Write the
+  new tag's commit SHA and update the comment
+
+Operations:
+
+- Frozen install: none
+- List outdated: `grep -rhoE 'uses: *[^ #]+' .github` for the pins, then
+  `gh api repos/<owner>/<repo>/releases/latest --jq .tag_name` for each latest
+  version. A repository without releases has only tags:
+  `gh api repos/<owner>/<repo>/tags --paginate --jq '.[].name'`, and take the
+  highest semver tag
+- Audit:
+  `gh api '/advisories?ecosystem=actions&affects=<owner>/<repo>@<version>'`. For
+  a SHA pin, use the tag from its comment
+- Update within ranges: none. A major tag already tracks its major
+- Set a version: rewrite every `uses:` line for that action, in every workflow
+  file, to the new ref. For a SHA pin, resolve the tag with
+  `gh api repos/<owner>/<repo>/commits/<tag> --jq .sha`
+- Explain: `grep -rn '<owner>/<repo>' .github` lists the workflows that use it
+- Repository: `github.com/<owner>/<repo>`
+- Override: none
+- Dedupe: none. Bring every use of one action to the same ref
+
+Verify an upgrade against the new version's `action.yml` (or `action.yaml`),
+fetched with
+`gh api 'repos/<owner>/<repo>/contents/[<path>/]action.yml?ref=<tag>' --jq .content | base64 -d`.
+Check that every `with:` key the workflow passes is still an input, every
+required input is passed, and every `steps.<id>.outputs.<name>` the workflow
+reads is still an output. A new `runs.using` (such as `node24`) is a runtime
+requirement when the workflow runs on self-hosted runners whose version predates
+it.
